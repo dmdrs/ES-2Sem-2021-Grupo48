@@ -12,7 +12,9 @@ Desenvolvimento da aplicacao CodeQualityAssessor para a disciplina de Engenharia
 |Sofia Santo|tsvde@iscte-iul.pt|69354| 
 
 * **Erros:**
-	*
+	* x
+	* x
 
 * **Funcionalidades incompletas**
-	*
+	* x
+	* x
