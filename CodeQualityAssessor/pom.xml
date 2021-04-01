@@ -25,18 +25,6 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
     </dependency> 
-     <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-<dependency>
-    <groupId>org.apache.poi</groupId>
-    <artifactId>poi</artifactId>
-    <version>4.1.2</version>
-</dependency>
-    <!-- https://mvnrepository.com/artifact/io.dropwizard.metrics/metrics-core -->
-<dependency>
-    <groupId>io.dropwizard.metrics</groupId>
-    <artifactId>metrics-core</artifactId>
-    <version>4.1.16</version>
-</dependency>
     
   </dependencies>
 
@@ -83,8 +71,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
-
 
   <reporting>
     <plugins>
