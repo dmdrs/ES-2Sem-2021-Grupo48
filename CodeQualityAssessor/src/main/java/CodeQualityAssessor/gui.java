@@ -9,7 +9,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -56,6 +62,17 @@ public class gui {
 		JButton readjavabutton = new JButton("Carregar projeto Java");
 		readjavabutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	            int option = fileChooser.showOpenDialog(frame);
+	            if(option == JFileChooser.APPROVE_OPTION){
+	               File file = fileChooser.getSelectedFile();
+	               String filename = file.getAbsolutePath();
+	               System.out.println("Folder Selected: " + filename);
+	               listAllFiles (file);
+	            }else{
+	            	System.out.println("Open command canceled");
+	            }
 			}
 		});
 		readjavabutton.setBounds(10, 11, 165, 23);
@@ -89,4 +106,32 @@ public class gui {
 		viewmetricsbutton.setBounds(10, 407, 165, 31);
 		frame.getContentPane().add(viewmetricsbutton);
 	}
+	
+	public void listAllFiles(File folder){
+	    File[] fileNames = folder.listFiles();
+	    for(File file : fileNames){
+	      if(file.isDirectory()){
+    	  //Caso identifique que é uma subpasta lança outra vez o ListAllFiles
+	         listAllFiles(file);
+	      }else{
+	        try {
+	          readContent(file);
+	        } catch (IOException e) {
+	          // TODO Auto-generated catch block
+	          e.printStackTrace();
+	        }
+	      }
+	    }
+	  }
+	
+	public void readContent(File file) throws IOException{
+	    System.out.println("reading file " + file.getCanonicalPath() );
+	    try(BufferedReader br  = new BufferedReader(new FileReader(file))){
+	      String strLine;
+	      // le linhas do ficheiro, retorna null quando o ficheiro nao tem mais linhas 
+	      while((strLine = br.readLine()) != null){
+	      System.out.println("Line is - " + strLine);
+	      }
+	    }
+	  }
 }
