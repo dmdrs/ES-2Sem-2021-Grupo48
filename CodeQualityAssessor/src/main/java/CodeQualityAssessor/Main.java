@@ -1,10 +1,10 @@
 package CodeQualityAssessor;
 
 /**
- * Hello world!
+ * @author todos
  *
  */
-public class App 
+public class Main 
 {
     public static void main( String[] args )
     {
