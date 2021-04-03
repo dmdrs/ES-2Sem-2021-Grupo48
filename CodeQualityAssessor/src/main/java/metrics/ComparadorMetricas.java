@@ -1,4 +1,11 @@
-package Metricas;
+package metrics;
+
+/**
+ * @author 1santo
+ * 
+ *         
+ *
+ */
 
 import java.util.Comparator;
 

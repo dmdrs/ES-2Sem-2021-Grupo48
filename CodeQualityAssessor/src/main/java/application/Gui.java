@@ -1,4 +1,4 @@
-package CodeQualityAssessor;
+package application;
 
 /**
  * @author rgmpo-iscte
@@ -21,20 +21,23 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
+import metrics.CYCLO_method;
 
-public class gui {
+public class Gui {
 
 	private JFrame frame;
 	private JTable table;
+	private CYCLO_method CYCLO_method;
 
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gui window = new gui();
+					Gui window = new Gui();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +49,7 @@ public class gui {
 	/**
 	 * Create the application.
 	 */
-	public gui() {
+	public Gui() {
 		initialize();
 	}
 

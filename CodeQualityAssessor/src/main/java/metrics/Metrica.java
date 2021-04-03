@@ -1,4 +1,4 @@
-package Metricas;
+package metrics;
 
 /**
  * @author 1santo
