@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,11 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import metrics.CYCLO_method;
 
 public class Gui {
@@ -84,7 +90,44 @@ public class Gui {
 		JButton excelbutton = new JButton("Gerar excel com métricas");
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
+		            String excelname = "D:/_metrics.xls" ;
+		            HSSFWorkbook workbook = new HSSFWorkbook();
+		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
+
+		            HSSFRow colunacima = sheet.createRow((short)0);
+		            colunacima.createCell(0).setCellValue("ID.");
+		            colunacima.createCell(1).setCellValue("Package");
+		            colunacima.createCell(2).setCellValue("class");
+		            colunacima.createCell(3).setCellValue("method");
+		            colunacima.createCell(4).setCellValue("NOM_class");
+		            colunacima.createCell(5).setCellValue("LOC_class");
+		            colunacima.createCell(6).setCellValue("WMC_class");
+		            colunacima.createCell(7).setCellValue("is_God_Class");
+		            colunacima.createCell(8).setCellValue("LOC_method");
+		            colunacima.createCell(9).setCellValue("CYCLO_method");
+		            colunacima.createCell(10).setCellValue("is_Long_Method");
+		            
+		            //Código abaixo tem de ser substituido pelas métricas 
+		            HSSFRow linha = sheet.createRow((short)1);
+		            linha.createCell(0).setCellValue("1");
+		            linha.createCell(1).setCellValue("ES");
+		            linha.createCell(2).setCellValue("gui");
+		            linha.createCell(3).setCellValue("inicialize");
+
+		            FileOutputStream fileOut = new FileOutputStream(excelname);
+		            workbook.write(fileOut);
+		            fileOut.close();
+		            workbook.close();
+		            System.out.println("Your excel file has been generated!");
+
+		        } catch ( Exception ex ) {
+		            System.out.println(ex);
+		        }
+		    
 			}
+			
 		});
 		excelbutton.setBounds(185, 11, 187, 23);
 		frame.getContentPane().add(excelbutton);
