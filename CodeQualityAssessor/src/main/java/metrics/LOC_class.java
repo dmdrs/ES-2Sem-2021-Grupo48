@@ -14,6 +14,7 @@ public class LOC_class {
 	private int linesOfCode;
 
 	//Lê todas as linhas inclusive comentários e espaços em branco
+	//Já foi testada!
 	
 	public LOC_class(){
 		
