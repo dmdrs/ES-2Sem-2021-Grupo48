@@ -15,10 +15,15 @@ public class LOC_class {
 
 	//Lê todas as linhas inclusive comentários e espaços em branco
 	
+	public LOC_class(){
+		
+	}
+	
+	
 	public void LOC_Class(BufferedReader file) {
 		fileJava = file;
 		linesOfCode = (int) fileJava.lines().count();
-		System.out.println("O numero de linhas do código é" + linesOfCode );
+		System.out.println("O numero de linhas do código é " + linesOfCode );
 	}
 		
 }
