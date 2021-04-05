@@ -1,5 +1,7 @@
 package metrics;
 
+import java.io.BufferedReader;
+
 /**
  * @author 1santo
  * 
@@ -30,7 +32,8 @@ public interface Propriedades{
 	 */
 	
 	int getValor();
-		
+	
+
 		 
 }
 

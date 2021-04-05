@@ -170,6 +170,7 @@ public class Gui {
 	    }
 	  }
 	
+	//será que tem de ter algo para não ler imagens? perguntar ao prof
 	public void readContent(File file) throws IOException{
 	    System.out.println("reading file " + file.getCanonicalPath() );
 	    try(BufferedReader br  = new BufferedReader(new FileReader(file))){
