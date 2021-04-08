@@ -7,10 +7,13 @@ package metrics;
  *
  */
 
+import java.io.BufferedReader;
+
+
 public abstract class Metrica implements Propriedades{
 	private String nomeMetrica; 
 	private int valor;
-	
+
 	public Metrica(String nome, int valor){
 		this.nomeMetrica=nome;
 		this.valor=valor;
@@ -35,6 +38,9 @@ public abstract class Metrica implements Propriedades{
 		// valor definido pelo utilizador para ser code smell
 		return valor;
 	}
+	
+	public abstract void init(BufferedReader file);
+	
 	
 }
 
