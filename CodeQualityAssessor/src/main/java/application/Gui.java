@@ -28,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import metrics.CYCLO_method;
+import metrics.NOM_class;
 
 public class Gui {
 
@@ -92,7 +93,7 @@ public class Gui {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
-		            String excelname = "D:/_metrics.xls" ;
+		            String excelname = "C:\\Users\\frank\\Desktop\\anothertest" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
 
@@ -173,11 +174,17 @@ public class Gui {
 	//será que tem de ter algo para não ler imagens? perguntar ao prof
 	public void readContent(File file) throws IOException{
 	    System.out.println("reading file " + file.getCanonicalPath() );
+	    try {
+			NOM_class.main(file);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    try(BufferedReader br  = new BufferedReader(new FileReader(file))){
 	      String strLine;
 	      // le linhas do ficheiro, retorna null quando o ficheiro nao tem mais linhas 
 	      while((strLine = br.readLine()) != null){
-	      System.out.println("Line is - " + strLine);
+	    //  System.out.println("Line is - " + strLine);
 	      }
 	    }
 	  }
