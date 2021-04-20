@@ -36,7 +36,7 @@ public class Gui {
 
 	private JFrame frame;
 	private JTable table;
-	private CYCLO_method CYCLO_method;
+	
 
 	/**
 	 * Launch the application.
@@ -93,7 +93,7 @@ public class Gui {
 		JButton excelbutton = new JButton("Gerar excel com métricas");
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {				
 					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
 		            String excelname = "C:\\Users\\frank\\Desktop\\anothertest\\anothertest.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
@@ -107,10 +107,9 @@ public class Gui {
 		            colunacima.createCell(4).setCellValue("NOM_class");
 		            colunacima.createCell(5).setCellValue("LOC_class");
 		            colunacima.createCell(6).setCellValue("WMC_class");
-		            colunacima.createCell(7).setCellValue("is_God_Class");
-		            colunacima.createCell(8).setCellValue("LOC_method");
-		            colunacima.createCell(9).setCellValue("CYCLO_method");
-		            colunacima.createCell(10).setCellValue("is_Long_Method");
+		            colunacima.createCell(7).setCellValue("LOC_method");
+		            colunacima.createCell(8).setCellValue("CYCLO_method");
+		           
 		            
 		            //Código abaixo tem de ser substituido pelas métricas 
 		            System.out.println(Foo.getTotalCount());
@@ -125,9 +124,12 @@ public class Gui {
 		            	
 		            linham.createCell(0).setCellValue(a+i+1);
 		            	
-		            linham.createCell(1).setCellValue(foo.getPackageName());	
-		            	
-		            linham.createCell(2).setCellValue(foo.getFile().getName());
+		            linham.createCell(1).setCellValue(foo.getPackageName());
+		            
+		            String classname= foo.getFile().getName();
+		            String target=String.copyValueOf(".java".toCharArray());
+		            classname=classname.replace(target, "");
+		            linham.createCell(2).setCellValue(classname);
 		            	
 		            linham.createCell(3).setCellValue(foo.getList().get(i));
 		   
@@ -135,7 +137,7 @@ public class Gui {
 		            
 		            linham.createCell(5).setCellValue(foo.getLoc());
 		            
-		            linham.createCell(8).setCellValue(foo.getListNr().get(i));
+		            linham.createCell(7).setCellValue(foo.getListNr().get(i));
 
 		            }
 		          
@@ -212,13 +214,7 @@ public class Gui {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    try(BufferedReader br  = new BufferedReader(new FileReader(file))){
-	      String strLine;
-	  
-	      // le linhas do ficheiro, retorna null quando o ficheiro nao tem mais linhas 
-	      while((strLine = br.readLine()) != null){
-	    //  System.out.println("Line is - " + strLine);
-	      }
+	    
 	    }
 	  }
-}
+

@@ -14,7 +14,8 @@ import org.w3c.dom.ranges.Range;
 
 import com.github.javaparser.StaticJavaParser;
 	import com.github.javaparser.ast.CompilationUnit;
-	import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 	
 	import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import metrics.LOC_class;
@@ -67,7 +68,7 @@ import metrics.LOC_class;
 
 	public class NOM_class  {
 	    public static int counter;
-	   static LinkedList<MethodDeclaration> Methods = new LinkedList<MethodDeclaration>();
+	
 	   static ArrayList<String> namesofmethods;
 	  static ArrayList<Integer> nrlinemethods;
 	   static String nameofpackage;
@@ -88,6 +89,7 @@ import metrics.LOC_class;
 	      nrlinemethods = new ArrayList<Integer>();
 	      CompilationUnit cu = StaticJavaParser.parse(in);
 	      nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
+	      new ConsVisitor().visit(cu,  null);
 	      new MethodVisitor().visit(cu, null);
 	      MethodNames namez = new MethodNames(namesofmethods);
 	      MethodNr numz = new MethodNr(nrlinemethods);
@@ -117,7 +119,7 @@ import metrics.LOC_class;
 	            // this method will be called for all methods in this 
 	            // CompilationUnit, including inner class methods
 	       //     System.out.println(n.getName()+""+n.getParameters());
-	            Methods.add(n);
+	          
 	            namesofmethods.add(n.getName()+""+n.getParameters());
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
@@ -127,7 +129,22 @@ import metrics.LOC_class;
 	       
 	        }
 	        
-	    
+	    private static class ConsVisitor extends VoidVisitorAdapter<Object>{
+	    	
+	    	@Override
+	    	public void visit(ConstructorDeclaration n, Object arg) {
+	    	
+	            namesofmethods.add(n.getName()+""+n.getParameters());
+	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
+	            int x = Math.abs(methodBodyLength);
+	             nrlinemethods.add(x);
+	            counter++;
+	    		
+	    	
+	    	}
+	    	
+	    	
+	    }
 
 	public static int getNrMethods() {
 		
