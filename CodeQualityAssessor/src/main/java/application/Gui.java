@@ -8,17 +8,23 @@ package application;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +32,8 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import metrics.CYCLO_method;
 import metrics.Foo;
@@ -36,6 +44,8 @@ public class Gui {
 
 	private JFrame frame;
 	private JTable table;
+	private HSSFWorkbook workbookread;
+	protected String name;
 	
 
 	/**
@@ -80,6 +90,7 @@ public class Gui {
 	            if(option == JFileChooser.APPROVE_OPTION){
 	               File file = fileChooser.getSelectedFile();
 	               String filename = file.getAbsolutePath();
+	               name = (String) file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\")+1);
 	               System.out.println("Folder Selected: " + filename);
 	               listAllFiles (file);
 	            }else{
@@ -95,7 +106,7 @@ public class Gui {
 			public void actionPerformed(ActionEvent e) {
 				try {				
 					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
-		            String excelname = "C:\\Users\\frank\\Desktop\\anothertest\\anothertest.xls" ;
+		            String excelname = "D:/"+ name +"_metrics.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
 
@@ -162,21 +173,37 @@ public class Gui {
 		excelbutton.setBounds(185, 11, 187, 23);
 		frame.getContentPane().add(excelbutton);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 43, 520, 248);
+		frame.getContentPane().add(scrollPane);
+		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
+			new Object[][] {},
 			new String[] {
+				"ID.", "Package", "class", "method", "NOM_class", "LOC_class", "WMC_class", "LOC_method", "CYCLO_method"
 			}
-		));
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		table.setBounds(10, 45, 462, 345);
-		frame.getContentPane().add(table);
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.getColumnModel().getColumn(8).setPreferredWidth(89);
+		scrollPane.setViewportView(table);
+		
 		
 		JButton viewmetricsbutton = new JButton("Visualizar Métricas");
 		viewmetricsbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Código para ler e importar excel gerado para a Jtable
+				try {
+					importExcelToJtable();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
 			}
 		});
 		viewmetricsbutton.setBounds(10, 407, 165, 31);
@@ -216,5 +243,36 @@ public class Gui {
 		}
 	    
 	    }
+	public void importExcelToJtable() throws IOException {
+		try {
+			InputStream excelFile = new FileInputStream("D:/"+ name +"_metrics.xls");
+			workbookread = new HSSFWorkbook(excelFile);
+            org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
+			for (int i = 1; i <= sheet.getLastRowNum(); i++)//iterate all rows from the first one to the last 
+			{
+				Row excelrow = sheet.getRow(i);
+				
+				Cell id = excelrow.getCell(0);
+                Cell packagename = excelrow.getCell(1);
+                Cell classname = excelrow.getCell(2);
+                Cell methodname = excelrow.getCell(3);
+                Cell nom_class = excelrow.getCell(4);
+                Cell loc_class = excelrow.getCell(5);
+                Cell wmc_class = excelrow.getCell(6);
+                Cell loc_method = excelrow.getCell(7);
+                Cell cyclo_method = excelrow.getCell(8);
+                
+               
+			  	//Adiciona a tabela os valores
+			  	DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.addRow(new Object[]{id,packagename,classname, methodname, nom_class,loc_class,wmc_class,loc_method,cyclo_method});
+				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+				
+	}
 	  }
 
