@@ -22,6 +22,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -244,6 +246,10 @@ public class Gui {
 	    
 	    }
 	public void importExcelToJtable() throws IOException {
+		ArrayList<String> packages = new ArrayList<String>();
+		ArrayList<String> classes = new ArrayList<String>();
+		ArrayList<String> metodos = new ArrayList<String>();
+		ArrayList<String> linhas = new ArrayList<String>();
 		try {
 			InputStream excelFile = new FileInputStream("D:/"+ name +"_metrics.xls");
 			workbookread = new HSSFWorkbook(excelFile);
@@ -262,6 +268,11 @@ public class Gui {
                 Cell loc_method = excelrow.getCell(7);
                 Cell cyclo_method = excelrow.getCell(8);
                 
+                packages.add(packagename.toString());
+                classes.add(classname.toString());
+                metodos.add(methodname.toString());
+                linhas.add(loc_method.toString());
+
                
 			  	//Adiciona a tabela os valores
 			  	DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -271,8 +282,38 @@ public class Gui {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}			
-				
+		}	
+		
+		int countpack = getocurrencias(packages);
+		int countclass = getocurrencias(classes);
+		int countmethod = getocurrencias(metodos);
+		int countlines = somalinhas(linhas);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(540, 43, 200, 248);
+		frame.getContentPane().add(scrollPane_1);
+		JTextArea textArea = new JTextArea();
+		textArea.setRows(4);
+		textArea.append("Número de Packages: "+countpack+"\n");
+		textArea.append("Número de Classes: "+countclass+"\n");
+		textArea.append("Número de Métodos: "+countmethod+"\n");
+		textArea.append("Número de linhas total do código: "+countlines+"\n");
+		scrollPane_1.setViewportView(textArea);				
 	}
-	  }
+	public static int getocurrencias(ArrayList <String> lista) {
+		Set<String> set = new HashSet<>(lista);
+		lista.clear();
+		lista.addAll(set);
+		int count=lista.size();
+		return count;
+	}
+	public static int somalinhas(ArrayList <String> lista) {
+		int soma =0;
+		for (int i=0;i<lista.size();i++) {
+			soma += Integer.parseInt(lista.get(i));
+		}
+		return soma;
+	}
+
+	
+}
 
