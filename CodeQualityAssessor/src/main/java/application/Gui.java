@@ -28,12 +28,15 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import metrics.CYCLO_method;
+import metrics.Foo;
+import metrics.NOM_class;
+import metrics.LOC_class;
 
 public class Gui {
 
 	private JFrame frame;
 	private JTable table;
-	private CYCLO_method CYCLO_method;
+	
 
 	/**
 	 * Launch the application.
@@ -90,9 +93,9 @@ public class Gui {
 		JButton excelbutton = new JButton("Gerar excel com métricas");
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {				
 					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
-		            String excelname = "D:/_metrics.xls" ;
+		            String excelname = "C:\\Users\\frank\\Desktop\\anothertest\\anothertest.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
 
@@ -104,18 +107,45 @@ public class Gui {
 		            colunacima.createCell(4).setCellValue("NOM_class");
 		            colunacima.createCell(5).setCellValue("LOC_class");
 		            colunacima.createCell(6).setCellValue("WMC_class");
-		            colunacima.createCell(7).setCellValue("is_God_Class");
-		            colunacima.createCell(8).setCellValue("LOC_method");
-		            colunacima.createCell(9).setCellValue("CYCLO_method");
-		            colunacima.createCell(10).setCellValue("is_Long_Method");
+		            colunacima.createCell(7).setCellValue("LOC_method");
+		            colunacima.createCell(8).setCellValue("CYCLO_method");
+		           
 		            
 		            //Código abaixo tem de ser substituido pelas métricas 
-		            HSSFRow linha = sheet.createRow((short)1);
-		            linha.createCell(0).setCellValue("1");
-		            linha.createCell(1).setCellValue("ES");
-		            linha.createCell(2).setCellValue("gui");
-		            linha.createCell(3).setCellValue("inicialize");
+		            System.out.println(Foo.getTotalCount());
+		            int a = 0;
+		            for(Foo foo : Foo.foos) {
+		           
+		            if(foo.getList().size()!=0 || foo.getCount()!=0) {
+		        	
+		            for(int i =0 ; i!= foo.getCount(); i++) {
 
+		            HSSFRow linham= sheet.createRow(a+i+1);
+		            	
+		            linham.createCell(0).setCellValue(a+i+1);
+		            	
+		            linham.createCell(1).setCellValue(foo.getPackageName());
+		            
+		            String classname= foo.getFile().getName();
+		            String target=String.copyValueOf(".java".toCharArray());
+		            classname=classname.replace(target, "");
+		            linham.createCell(2).setCellValue(classname);
+		            	
+		            linham.createCell(3).setCellValue(foo.getList().get(i));
+		   
+		            linham.createCell(4).setCellValue(foo.getCount());
+		            
+		            linham.createCell(5).setCellValue(foo.getLoc());
+		            
+		            linham.createCell(7).setCellValue(foo.getListNr().get(i));
+
+		            }
+		          
+		            }
+		            a = a + foo.getCount();
+		            }
+		           
+		            
 		            FileOutputStream fileOut = new FileOutputStream(excelname);
 		            workbook.write(fileOut);
 		            fileOut.close();
@@ -155,13 +185,16 @@ public class Gui {
 	
 	public void listAllFiles(File folder){
 	    File[] fileNames = folder.listFiles();
+	    
 	    for(File file : fileNames){
 	      if(file.isDirectory()){
     	  //Caso identifique que é uma subpasta lança outra vez o ListAllFiles
 	         listAllFiles(file);
 	      }else{
 	        try {
+	        	if(file.getName().endsWith("java")) {
 	          readContent(file);
+	        	}
 	        } catch (IOException e) {
 	          // TODO Auto-generated catch block
 	          e.printStackTrace();
@@ -173,12 +206,15 @@ public class Gui {
 	//será que tem de ter algo para não ler imagens? perguntar ao prof
 	public void readContent(File file) throws IOException{
 	    System.out.println("reading file " + file.getCanonicalPath() );
-	    try(BufferedReader br  = new BufferedReader(new FileReader(file))){
-	      String strLine;
-	      // le linhas do ficheiro, retorna null quando o ficheiro nao tem mais linhas 
-	      while((strLine = br.readLine()) != null){
-	      System.out.println("Line is - " + strLine);
-	      }
+	    
+	    try {
+			NOM_class.main(file);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	    }
 	  }
-}
+
