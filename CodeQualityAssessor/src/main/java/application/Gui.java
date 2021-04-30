@@ -48,7 +48,7 @@ public class Gui {
 	private JTable table;
 	private HSSFWorkbook workbookread;
 	protected String name;
-	
+	protected String filepath;
 
 	/**
 	 * Launch the application.
@@ -79,7 +79,7 @@ public class Gui {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 797, 532);
+		frame.setBounds(100, 100, 1137, 585);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -91,9 +91,9 @@ public class Gui {
 	            int option = fileChooser.showOpenDialog(frame);
 	            if(option == JFileChooser.APPROVE_OPTION){
 	               File file = fileChooser.getSelectedFile();
-	               String filename = file.getAbsolutePath();
+	               filepath =  (String) file.getAbsolutePath();
 	               name = (String) file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\")+1);
-	               System.out.println("Folder Selected: " + filename);
+	               System.out.println("Folder Selected: " + filepath);
 	               listAllFiles (file);
 	            }else{
 	            	System.out.println("Open command canceled");
@@ -107,8 +107,7 @@ public class Gui {
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {				
-					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
-		            String excelname = "D:/"+ name +"_metrics.xls" ;
+		            String excelname = filepath + "/" + name + "_metrics.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
 
@@ -123,8 +122,7 @@ public class Gui {
 		            colunacima.createCell(7).setCellValue("LOC_method");
 		            colunacima.createCell(8).setCellValue("CYCLO_method");
 		           
-		            
-		            //Código abaixo tem de ser substituido pelas métricas 
+		           
 		            System.out.println(Foo.getTotalCount());
 		            int a = 0;
 		            for(Foo foo : Foo.foos) {
@@ -135,7 +133,7 @@ public class Gui {
 
 		            HSSFRow linham= sheet.createRow(a+i+1);
 		            	
-		            linham.createCell(0).setCellValue(a+i+1);
+		            linham.createCell(0).setCellValue(Integer.toString(a+i+1));
 		            	
 		            linham.createCell(1).setCellValue(foo.getPackageName());
 		            
@@ -146,11 +144,11 @@ public class Gui {
 		            	
 		            linham.createCell(3).setCellValue(foo.getList().get(i));
 		   
-		            linham.createCell(4).setCellValue(foo.getCount());
+		            linham.createCell(4).setCellValue(Integer.toString(foo.getCount()));
 		            
-		            linham.createCell(5).setCellValue(foo.getLoc());
+		            linham.createCell(5).setCellValue(Integer.toString(foo.getLoc()));
 		            
-		            linham.createCell(7).setCellValue(foo.getListNr().get(i));
+		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
 
 		            }
 		          
@@ -176,7 +174,7 @@ public class Gui {
 		frame.getContentPane().add(excelbutton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 43, 520, 248);
+		scrollPane.setBounds(10, 43, 760, 248);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -208,8 +206,24 @@ public class Gui {
 				}		
 			}
 		});
-		viewmetricsbutton.setBounds(10, 407, 165, 31);
+		viewmetricsbutton.setBounds(10,510, 165, 31);
 		frame.getContentPane().add(viewmetricsbutton);
+		
+		JButton guardaregras = new JButton("Guardar Regras Definidas");
+		guardaregras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		guardaregras.setBounds(180, 510, 175, 31);
+		frame.getContentPane().add(guardaregras);
+		
+		JButton avaliarcodesmells = new JButton("Detetar Code Smells");
+		avaliarcodesmells.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		avaliarcodesmells.setBounds(364, 510, 193, 31);
+		frame.getContentPane().add(avaliarcodesmells);
 	}
 	
 	public void listAllFiles(File folder){
@@ -251,7 +265,7 @@ public class Gui {
 		ArrayList<String> metodos = new ArrayList<String>();
 		ArrayList<String> linhas = new ArrayList<String>();
 		try {
-			InputStream excelFile = new FileInputStream("D:/"+ name +"_metrics.xls");
+			InputStream excelFile = new FileInputStream(filepath + "/" + name + "_metrics.xls");
 			workbookread = new HSSFWorkbook(excelFile);
             org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
 			for (int i = 1; i <= sheet.getLastRowNum(); i++)//iterate all rows from the first one to the last 
@@ -289,7 +303,7 @@ public class Gui {
 		int countmethod = getocurrencias(metodos);
 		int countlines = somalinhas(linhas);
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(540, 43, 200, 248);
+		scrollPane_1.setBounds(800, 43, 300, 248);
 		frame.getContentPane().add(scrollPane_1);
 		JTextArea textArea = new JTextArea();
 		textArea.setRows(4);
@@ -313,7 +327,5 @@ public class Gui {
 		}
 		return soma;
 	}
-
-	
 }
 
