@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.w3c.dom.ranges.Range;
 
@@ -16,10 +20,20 @@ import com.github.javaparser.StaticJavaParser;
 	import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-	
-	import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.ConditionalExpr;
+import com.github.javaparser.ast.stmt.CatchClause;
+import com.github.javaparser.ast.stmt.DoStmt;
+import com.github.javaparser.ast.stmt.ForEachStmt;
+import com.github.javaparser.ast.stmt.ForStmt;
+import com.github.javaparser.ast.stmt.IfStmt;
+import com.github.javaparser.ast.stmt.SwitchEntry;
+import com.github.javaparser.ast.stmt.SwitchStmt;
+import com.github.javaparser.ast.stmt.WhileStmt;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import metrics.LOC_class;
-
+import static com.github.javaparser.ast.expr.BinaryExpr.Operator.AND;
+import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 	/**
 	 * @author fmmba
@@ -62,15 +76,27 @@ import metrics.LOC_class;
 				return mcount;	
 				}
 	}
-	
+	class Methodc {
+		 private ArrayList<Integer> mcount;
+		 public Methodc( ArrayList<Integer> i) {
+				this.mcount=i;
+			}
+		 public ArrayList<Integer> getListc() {
+				
+				return mcount;	
+				}
+	}
 
 	
 
 	public class NOM_class  {
 	    public static int counter;
+	    public static int cyclocounter;
+	    public static int cyclocountercounter;
 	
 	   static ArrayList<String> namesofmethods;
 	  static ArrayList<Integer> nrlinemethods;
+	  static ArrayList<Integer> nrcyclomethods;
 	   static String nameofpackage;
        
 		
@@ -79,6 +105,8 @@ import metrics.LOC_class;
 	    public static void main(File file) throws Exception {
 	        // creates an input stream for the file to be parsed
 	     counter = 0;
+	     cyclocounter= 0;
+	     cyclocountercounter=0;
 	   
 	     FileInputStream in = new FileInputStream( file);
 	     BufferedReader br  = new BufferedReader(new FileReader(file));
@@ -87,19 +115,29 @@ import metrics.LOC_class;
 		
 	      namesofmethods = new ArrayList<String>();
 	      nrlinemethods = new ArrayList<Integer>();
+	      nrcyclomethods = new ArrayList<Integer>();
+	     
 	      CompilationUnit cu = StaticJavaParser.parse(in);
 	      nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
+	      
 	      new ConsVisitor().visit(cu,  null);
 	      new MethodVisitor().visit(cu, null);
+	    //  new CYCLO_method1().visit(cu,null);
+	      
 	      MethodNames namez = new MethodNames(namesofmethods);
 	      MethodNr numz = new MethodNr(nrlinemethods);
+	      Methodc cyclonrr = new Methodc(nrcyclomethods);
+	    
 	      
 	    
-	      Foo fooo= new Foo(nameofpackage,file,namez,counter,LOC_class.linesOfCode,numz);
+	      Foo fooo= new Foo(nameofpackage,file,namez,counter,LOC_class.linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
 	      Foo.foos.add(fooo);
 	      for(Foo singlefoo : Foo.foos) {
-	    	  System.out.println("Package Name: "+nameofpackage +" File: "+singlefoo.getFile().getName()+" Methods: "+singlefoo.getList()+" Count: "+singlefoo.getCount());
-				
+	    	
+	    	  //System.out.println("Package Name: "+nameofpackage +" File: "+singlefoo.getFile().getName()+" Methods: "+singlefoo.getList()+" Count: "+singlefoo.getCount());
+	    	 
+	    		  System.out.println("Number of cyclo_methods in "+file.getName()+" is "+singlefoo.getCycloCount());
+	    	  
 	      }
 	      
 			
@@ -119,7 +157,32 @@ import metrics.LOC_class;
 	            // this method will be called for all methods in this 
 	            // CompilationUnit, including inner class methods
 	       //     System.out.println(n.getName()+""+n.getParameters());
+	        	
+	        	
+	        	cyclocounter = 1;
+	    		Pattern pattern = Pattern.compile(
+	    				"(\\&\\&|\\|\\|)|((^| +|\\}|\\;|\t)((if|for|while|catch)( +|\\()))|(\\?.*\\:)|((\t|^|\\;|\\{\\})(case +|continue;))",
+	    				Pattern.MULTILINE);
+	    		String ok = n.toString();
+	    		String cleanText = ok.replaceAll("\\/\\/(.*)|\\/\\*([\\s\\S]*?)\\*\\/", "");
+	    		Matcher matcher = pattern.matcher(cleanText);
+	    		
+	    		while (matcher.find()) {
+	    			cyclocounter++;
+	    		}
+	           
+    	        
+    	      
+    	        
+    	        nrcyclomethods.add(cyclocounter) ;
+	        	  
+	        
 	          
+	        	
+	        	
+	        	
+	        	
+	        	
 	            namesofmethods.add(n.getName()+""+n.getParameters());
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
@@ -133,24 +196,44 @@ import metrics.LOC_class;
 	    	
 	    	@Override
 	    	public void visit(ConstructorDeclaration n, Object arg) {
-	    	
+	    		cyclocounter = 1;
+	    		Pattern pattern = Pattern.compile(
+	    				"(\\&\\&|\\|\\|)|((^| +|\\}|\\;|\t)((if|for|while|catch)( +|\\()))|(\\?.*\\:)|((\t|^|\\;|\\{\\})(case +|continue;))",
+	    				Pattern.MULTILINE);
+	    		String ok = n.toString();
+	    		String cleanText = ok.replaceAll("\\/\\/(.*)|\\/\\*([\\s\\S]*?)\\*\\/", "");
+	    		Matcher matcher = pattern.matcher(cleanText);
+	    		while (matcher.find()) {
+	    			cyclocounter++;
+	    		}
+	           
+	    	     nrcyclomethods.add(cyclocounter) ;
+
+	    		
+	    		
 	            namesofmethods.add(n.getName()+""+n.getParameters());
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
 	             nrlinemethods.add(x);
 	            counter++;
+	            
 	    		
 	    	
 	    	}
-	    	
-	    	
 	    }
-
-	public static int getNrMethods() {
+	    	
+public static int getCycloCyclo(ArrayList<Integer> a) {
+	
+	for( int b :  a) {
+		cyclocountercounter=cyclocountercounter + b ;
 		
-		
-	return counter;	
 	}
+	return cyclocountercounter;
+	}
+	
+
+
+	
 
 	
 	}
