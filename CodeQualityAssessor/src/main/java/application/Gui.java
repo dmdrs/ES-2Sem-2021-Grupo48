@@ -37,7 +37,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import metrics.CYCLO_method;
+
 import metrics.Foo;
 import metrics.NOM_class;
 import metrics.LOC_class;
@@ -148,9 +148,16 @@ public class Gui {
 		            
 		            linham.createCell(5).setCellValue(Integer.toString(foo.getLoc()));
 		            
+		            linham.createCell(6).setCellValue(Integer.toString(foo.getCycloCyclo()));
+		            
 		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
+		           
+		            linham.createCell(8).setCellValue(Integer.toString(foo.getCycloCount().get(i)));
+
+//		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
 
 		            }
+		            
 		          
 		            }
 		            a = a + foo.getCount();
