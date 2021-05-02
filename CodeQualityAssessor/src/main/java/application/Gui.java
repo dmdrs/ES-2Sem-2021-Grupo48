@@ -8,17 +8,25 @@ package application;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +34,8 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 
 import metrics.Foo;
@@ -36,7 +46,9 @@ public class Gui {
 
 	private JFrame frame;
 	private JTable table;
-	
+	private HSSFWorkbook workbookread;
+	protected String name;
+	protected String filepath;
 
 	/**
 	 * Launch the application.
@@ -67,7 +79,7 @@ public class Gui {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 797, 532);
+		frame.setBounds(100, 100, 1137, 585);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -79,8 +91,9 @@ public class Gui {
 	            int option = fileChooser.showOpenDialog(frame);
 	            if(option == JFileChooser.APPROVE_OPTION){
 	               File file = fileChooser.getSelectedFile();
-	               String filename = file.getAbsolutePath();
-	               System.out.println("Folder Selected: " + filename);
+	               filepath =  (String) file.getAbsolutePath();
+	               name = (String) file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\")+1);
+	               System.out.println("Folder Selected: " + filepath);
 	               listAllFiles (file);
 	            }else{
 	            	System.out.println("Open command canceled");
@@ -94,8 +107,7 @@ public class Gui {
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {				
-					//Resolver nome do ficheiro. Tem de ser nomedapastarecebida_metrics.xls
-		            String excelname = "C:\\Users\\frank\\Desktop\\anothertest\\anothertest.xls" ;
+		            String excelname = filepath + "/" + name + "_metrics.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
 
@@ -110,8 +122,7 @@ public class Gui {
 		            colunacima.createCell(7).setCellValue("LOC_method");
 		            colunacima.createCell(8).setCellValue("CYCLO_method");
 		           
-		            
-		            //Código abaixo tem de ser substituido pelas métricas 
+		           
 		            System.out.println(Foo.getTotalCount());
 		            int a = 0;
 		            for(Foo foo : Foo.foos) {
@@ -122,7 +133,7 @@ public class Gui {
 
 		            HSSFRow linham= sheet.createRow(a+i+1);
 		            	
-		            linham.createCell(0).setCellValue(a+i+1);
+		            linham.createCell(0).setCellValue(Integer.toString(a+i+1));
 		            	
 		            linham.createCell(1).setCellValue(foo.getPackageName());
 		            
@@ -133,15 +144,18 @@ public class Gui {
 		            	
 		            linham.createCell(3).setCellValue(foo.getList().get(i));
 		   
-		            linham.createCell(4).setCellValue(foo.getCount());
+		            linham.createCell(4).setCellValue(Integer.toString(foo.getCount()));
 		            
-		            linham.createCell(5).setCellValue(foo.getLoc());
+		            linham.createCell(5).setCellValue(Integer.toString(foo.getLoc()));
 		            
-		            linham.createCell(6).setCellValue(foo.getCycloCyclo());
+		            linham.createCell(6).setCellValue(Integer.toString(foo.getCycloCyclo()));
 		            
-		            linham.createCell(7).setCellValue(foo.getListNr().get(i));
+		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
 		           
-		            linham.createCell(8).setCellValue(foo.getCycloCount().get(i));
+		            linham.createCell(8).setCellValue(Integer.toString(foo.getCycloCount().get(i)));
+
+//		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
+
 		            }
 		            
 		          
@@ -166,25 +180,57 @@ public class Gui {
 		excelbutton.setBounds(185, 11, 187, 23);
 		frame.getContentPane().add(excelbutton);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 43, 760, 248);
+		frame.getContentPane().add(scrollPane);
+		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
+			new Object[][] {},
 			new String[] {
+				"ID.", "Package", "class", "method", "NOM_class", "LOC_class", "WMC_class", "LOC_method", "CYCLO_method"
 			}
-		));
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		table.setBounds(10, 45, 462, 345);
-		frame.getContentPane().add(table);
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.getColumnModel().getColumn(8).setPreferredWidth(89);
+		scrollPane.setViewportView(table);
+		
 		
 		JButton viewmetricsbutton = new JButton("Visualizar Métricas");
 		viewmetricsbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Código para ler e importar excel gerado para a Jtable
+				try {
+					importExcelToJtable();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
 			}
 		});
-		viewmetricsbutton.setBounds(10, 407, 165, 31);
+		viewmetricsbutton.setBounds(10,510, 165, 31);
 		frame.getContentPane().add(viewmetricsbutton);
+		
+		JButton guardaregras = new JButton("Guardar Regras Definidas");
+		guardaregras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		guardaregras.setBounds(180, 510, 175, 31);
+		frame.getContentPane().add(guardaregras);
+		
+		JButton avaliarcodesmells = new JButton("Detetar Code Smells");
+		avaliarcodesmells.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		avaliarcodesmells.setBounds(364, 510, 193, 31);
+		frame.getContentPane().add(avaliarcodesmells);
 	}
 	
 	public void listAllFiles(File folder){
@@ -220,5 +266,73 @@ public class Gui {
 		}
 	    
 	    }
-	  }
+	public void importExcelToJtable() throws IOException {
+		ArrayList<String> packages = new ArrayList<String>();
+		ArrayList<String> classes = new ArrayList<String>();
+		ArrayList<String> metodos = new ArrayList<String>();
+		ArrayList<String> linhas = new ArrayList<String>();
+		try {
+			InputStream excelFile = new FileInputStream(filepath + "/" + name + "_metrics.xls");
+			workbookread = new HSSFWorkbook(excelFile);
+            org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
+			for (int i = 1; i <= sheet.getLastRowNum(); i++)//iterate all rows from the first one to the last 
+			{
+				Row excelrow = sheet.getRow(i);
+				
+				Cell id = excelrow.getCell(0);
+                Cell packagename = excelrow.getCell(1);
+                Cell classname = excelrow.getCell(2);
+                Cell methodname = excelrow.getCell(3);
+                Cell nom_class = excelrow.getCell(4);
+                Cell loc_class = excelrow.getCell(5);
+                Cell wmc_class = excelrow.getCell(6);
+                Cell loc_method = excelrow.getCell(7);
+                Cell cyclo_method = excelrow.getCell(8);
+                
+                packages.add(packagename.toString());
+                classes.add(classname.toString());
+                metodos.add(methodname.toString());
+                linhas.add(loc_method.toString());
+
+               
+			  	//Adiciona a tabela os valores
+			  	DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.addRow(new Object[]{id,packagename,classname, methodname, nom_class,loc_class,wmc_class,loc_method,cyclo_method});
+				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		int countpack = getocurrencias(packages);
+		int countclass = getocurrencias(classes);
+		int countmethod = getocurrencias(metodos);
+		int countlines = somalinhas(linhas);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(800, 43, 300, 248);
+		frame.getContentPane().add(scrollPane_1);
+		JTextArea textArea = new JTextArea();
+		textArea.setRows(4);
+		textArea.append("Número de Packages: "+countpack+"\n");
+		textArea.append("Número de Classes: "+countclass+"\n");
+		textArea.append("Número de Métodos: "+countmethod+"\n");
+		textArea.append("Número de linhas total do código: "+countlines+"\n");
+		scrollPane_1.setViewportView(textArea);				
+	}
+	public static int getocurrencias(ArrayList <String> lista) {
+		Set<String> set = new HashSet<>(lista);
+		lista.clear();
+		lista.addAll(set);
+		int count=lista.size();
+		return count;
+	}
+	public static int somalinhas(ArrayList <String> lista) {
+		int soma =0;
+		for (int i=0;i<lista.size();i++) {
+			soma += Integer.parseInt(lista.get(i));
+		}
+		return soma;
+	}
+}
 
