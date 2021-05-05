@@ -37,6 +37,10 @@ public class CodeSmells extends JDialog {
 	public int FP1;
 	public int VN1;
 	public int FN1;
+	public int VP2;
+	public int FP2;
+	public int VN2;
+	public int FN2;
 
 	/**
 	 * Launch the application.
@@ -119,12 +123,13 @@ public class CodeSmells extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					compararLongMethod();
-					
-					Chart h = new Chart();
-					h.createChart(VP1, FP1, VN1, FN1,"LongMethod");
-					h.setVisible(true);
-					
-					
+					compararGodClass();
+					Chart c = new Chart();
+					c.createChart(VP1, FP1, VN1, FN1,"LongMethod");
+					c.setVisible(true);
+					Chart c1 = new Chart();
+					c1.createChart(VP2, FP2, VN2, FN2, "GodClass");
+					c1.setVisible(true);
 					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -415,6 +420,50 @@ public class CodeSmells extends JDialog {
         }
           
 	}
+	
+	public void compararGodClass() throws IOException {
+		VP2 =0;
+		FP2 =0;
+		VN2 =0;
+		FN2 =0;
+		InputStream excelFile = new FileInputStream(Gui.getLocation());
+		workbookread = new HSSFWorkbook(excelFile);
+        org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
+        InputStream excelFile3 = new FileInputStream("Code_Smells.xls");
+		workbookread3 = new HSSFWorkbook(excelFile3);
+        org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
+        
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+    		Row excelrow = sheet.getRow(i);
+			Cell classname = excelrow.getCell(2);
+            Cell isGodClass = excelrow.getCell(10);
+            if(isGodClass!=null) {
+        	for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
+        		Row excelrow2 = sheet3.getRow(j);
+				Cell classname2 = excelrow2.getCell(2);
+                Cell isGodClass2 = excelrow2.getCell(7);
+                
+                if(classname.toString().equals(classname2.toString())) {
+                	if(isGodClass.getBooleanCellValue()==true && isGodClass2.getBooleanCellValue()==true) {
+                		VP2++;
+                	}
+                	if(isGodClass.getBooleanCellValue()==true && isGodClass2.getBooleanCellValue()==false) {
+                		FP2++;
+                	}
+                	if(isGodClass.getBooleanCellValue()==false && isGodClass2.getBooleanCellValue()==false) {
+                		VN2++;
+                	}
+                	if(isGodClass.getBooleanCellValue()==false && isGodClass2.getBooleanCellValue()==true) {
+                		FN2++;
+                	}
+                	j=sheet3.getLastRowNum();
+                }                
+        	}
+        }
+        }
+        
+	}
+	
 	
 	
 }
