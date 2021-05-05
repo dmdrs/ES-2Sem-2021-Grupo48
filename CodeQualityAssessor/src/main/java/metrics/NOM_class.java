@@ -136,7 +136,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    	
 	    	  //System.out.println("Package Name: "+nameofpackage +" File: "+singlefoo.getFile().getName()+" Methods: "+singlefoo.getList()+" Count: "+singlefoo.getCount());
 	    	 
-	    		  System.out.println("Number of cyclo_methods in "+file.getName()+" is "+singlefoo.getCycloCount());
+//	    		  System.out.println("Number of cyclo_methods in "+file.getName()+" is "+singlefoo.getCycloCount());
 	    	  
 	      }
 	      
@@ -181,12 +181,12 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	        	
 	        	
 	        	
-	        	
-	        	
-	            namesofmethods.add(n.getName()+""+n.getParameters());
+    	        String s = n.getDeclarationAsString(false, false, false).substring(n.getDeclarationAsString(false, false, false).indexOf(n.getNameAsString()));
+        		namesofmethods.add(s.replaceAll(" ",""));
+//	            namesofmethods.add(n.getDeclarationAsString(false, false, false).replaceFirst(n.getTypeAsString()+" ", "").replaceAll(" ", ""));
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
-	             nrlinemethods.add(x);
+	            nrlinemethods.add(x);
 	            counter++;
 	        }
 	       
@@ -211,7 +211,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 	    		
 	    		
-	            namesofmethods.add(n.getName()+""+n.getParameters());
+	    	    namesofmethods.add(n.getDeclarationAsString(false, false, false).replaceAll(" ", ""));
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
 	             nrlinemethods.add(x);

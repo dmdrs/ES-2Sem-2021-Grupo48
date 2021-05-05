@@ -49,6 +49,8 @@ public class Gui {
 	private HSSFWorkbook workbookread;
 	protected String name;
 	protected String filepath;
+	protected ArrayList<String> classes = new ArrayList<String>();
+	private static String excelLocation;
 
 	/**
 	 * Launch the application.
@@ -110,6 +112,7 @@ public class Gui {
 		            String excelname = filepath + "/" + name + "_metrics.xls" ;
 		            HSSFWorkbook workbook = new HSSFWorkbook();
 		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
+		            setLocation();
 
 		            HSSFRow colunacima = sheet.createRow((short)0);
 		            colunacima.createCell(0).setCellValue("ID.");
@@ -154,7 +157,6 @@ public class Gui {
 		           
 		            linham.createCell(8).setCellValue(Integer.toString(foo.getCycloCount().get(i)));
 
-//		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
 
 		            }
 		            
@@ -271,11 +273,13 @@ public class Gui {
 		ArrayList<String> classes = new ArrayList<String>();
 		ArrayList<String> metodos = new ArrayList<String>();
 		ArrayList<String> linhas = new ArrayList<String>();
+		int countmethod = 0;
 		try {
 			InputStream excelFile = new FileInputStream(filepath + "/" + name + "_metrics.xls");
 			workbookread = new HSSFWorkbook(excelFile);
             org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
-			for (int i = 1; i <= sheet.getLastRowNum(); i++)//iterate all rows from the first one to the last 
+            countmethod = sheet.getLastRowNum();
+            for (int i = 1; i <= sheet.getLastRowNum(); i++)//iterate all rows from the first one to the last 
 			{
 				Row excelrow = sheet.getRow(i);
 				
@@ -307,7 +311,6 @@ public class Gui {
 		
 		int countpack = getocurrencias(packages);
 		int countclass = getocurrencias(classes);
-		int countmethod = getocurrencias(metodos);
 		int countlines = somalinhas(linhas);
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(800, 43, 300, 248);
@@ -333,6 +336,17 @@ public class Gui {
 			soma += Integer.parseInt(lista.get(i));
 		}
 		return soma;
+	}
+	
+	public ArrayList<String> getStringList() {
+	    return classes;
+	}
+	
+	public static String getLocation() {
+		return excelLocation;
+	}
+	public void setLocation() {
+		excelLocation = filepath + "/" + name + "_metrics.xls";
 	}
 }
 
