@@ -348,6 +348,8 @@ public class Gui {
 		JButton avaliarcodesmells = new JButton("Detetar Code Smells");
 		avaliarcodesmells.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CodeSmells dialog = new CodeSmells();
+				dialog.setVisible(true);
 			}
 		});
 		avaliarcodesmells.setBounds(364, 510, 193, 31);
