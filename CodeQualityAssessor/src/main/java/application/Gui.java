@@ -350,6 +350,13 @@ public class Gui {
 			public void actionPerformed(ActionEvent e) {
 				CodeSmells dialog = new CodeSmells();
 				dialog.setVisible(true);
+				try {
+					dialog.detecaoLongMethod(filepath + "/" + name + "_metrics.xls",metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()));
+					dialog.detecaoGodClass(filepath + "/" + name + "_metrics.xls",metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
+				} catch (NumberFormatException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		avaliarcodesmells.setBounds(364, 510, 193, 31);
