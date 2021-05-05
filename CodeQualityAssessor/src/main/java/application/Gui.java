@@ -18,11 +18,13 @@ import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -318,6 +320,7 @@ public class Gui {
 		JButton guardaregras = new JButton("Guardar Regras Definidas");
 		guardaregras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				escreverhistorico(metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()), metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
 			}
 		});
 		guardaregras.setBounds(180, 510, 175, 31);
@@ -446,6 +449,29 @@ public class Gui {
 	}
 	public void setLocation() {
 		excelLocation = filepath + "/" + name + "_metrics.xls";
+	}
+	
+	public void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter("Histórico.txt", true); 
+			BufferedWriter writer2 = new BufferedWriter(writer);
+			writer2.newLine();
+			writer2.write("Long Method:");
+			writer2.newLine();
+			writer2.write(metrica1+ " > " + valor1 + " " + operador1 + " " + metrica2 + " > " + valor2);
+			writer2.newLine();
+			writer2.write("God Class:");
+			writer2.newLine();
+			writer2.write(metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4);
+			writer2.newLine();
+
+        writer2.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
 	}
 }
 
