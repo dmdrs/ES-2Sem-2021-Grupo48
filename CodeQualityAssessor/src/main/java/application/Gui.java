@@ -317,10 +317,29 @@ public class Gui {
 		metrica4.setBounds(296, 444, 126, 22);
 		frame.getContentPane().add(metrica4);
 		
+		JScrollPane scrollPane_historico = new JScrollPane();
+		scrollPane_historico.setBounds(576, 302, 535, 195);
+		frame.getContentPane().add(scrollPane_historico);
+		
+		JTextArea textAreahistorico = new JTextArea();
+		scrollPane_historico.setViewportView(textAreahistorico);
+		try {
+			mostrarhistorico(textAreahistorico);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		JButton guardaregras = new JButton("Guardar Regras Definidas");
 		guardaregras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				escreverhistorico(metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()), metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
+				try {
+					mostrarhistorico(textAreahistorico);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		guardaregras.setBounds(180, 510, 175, 31);
@@ -472,6 +491,21 @@ public class Gui {
 			e.printStackTrace();
 		}
        
+	}
+	
+	public void mostrarhistorico (JTextArea TextArea) throws IOException {
+		FileReader reader;
+		try {
+			reader = new FileReader ("Histórico.txt");
+			BufferedReader reader2 = new BufferedReader (reader);
+			TextArea.read (reader2,null);
+			reader2.close();
+			TextArea.requestFocus();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
 
