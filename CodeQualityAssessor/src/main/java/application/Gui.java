@@ -6,19 +6,25 @@ package application;
  */
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,6 +33,7 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +56,10 @@ public class Gui {
 	private HSSFWorkbook workbookread;
 	protected String name;
 	protected String filepath;
+	private JTextField textField1;
+	private JTextField textField2;
+	private JTextField textField3;
+	private JTextField textField4;
 	protected ArrayList<String> classes = new ArrayList<String>();
 	private static String excelLocation;
 
@@ -218,9 +229,117 @@ public class Gui {
 		viewmetricsbutton.setBounds(10,510, 165, 31);
 		frame.getContentPane().add(viewmetricsbutton);
 		
+		JLabel labelLongMethod = new JLabel("Long Method:");
+		labelLongMethod.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelLongMethod.setBounds(10, 302, 121, 23);
+		frame.getContentPane().add(labelLongMethod);
+		
+		JLabel labelGodClass = new JLabel("God Class:");
+		labelGodClass.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelGodClass.setBounds(10, 394, 121, 23);
+		frame.getContentPane().add(labelGodClass);
+		
+		JLabel lblNewLabel = new JLabel(">");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(143, 353, 46, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel(">");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(432, 353, 46, 14);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel(">");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(143, 446, 46, 14);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel(">");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(432, 446, 46, 14);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		JComboBox andor1 = new JComboBox();
+		andor1.setModel(new DefaultComboBoxModel(new String[] {"E", "OU"}));
+		andor1.setBounds(239, 351, 47, 22);
+		frame.getContentPane().add(andor1);
+		
+		JComboBox andor2 = new JComboBox();
+		andor2.setModel(new DefaultComboBoxModel(new String[] {"E", "OU"}));
+		andor2.setBounds(239, 444, 47, 22);
+		frame.getContentPane().add(andor2);
+		
+		textField1 = new JTextField();
+		textField1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField1.setBounds(167, 352, 62, 20);
+		frame.getContentPane().add(textField1);
+		textField1.setColumns(10);
+		
+		textField2 = new JTextField();
+		textField2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField2.setColumns(10);
+		textField2.setBounds(454, 352, 62, 20);
+		frame.getContentPane().add(textField2);
+		
+		textField3 = new JTextField();
+		textField3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField3.setColumns(10);
+		textField3.setBounds(167, 445, 62, 20);
+		frame.getContentPane().add(textField3);
+		
+		textField4 = new JTextField();
+		textField4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField4.setColumns(10);
+		textField4.setBounds(454, 445, 62, 20);
+		frame.getContentPane().add(textField4);
+		
+		JComboBox metrica1 = new JComboBox();
+		metrica1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica1.setModel(new DefaultComboBoxModel(new String[] {"LOC_method", "CYCLO_method"}));
+		metrica1.setBounds(10, 351, 126, 22);
+		frame.getContentPane().add(metrica1);
+		
+		JComboBox metrica2 = new JComboBox();
+		metrica2.setModel(new DefaultComboBoxModel(new String[] {"CYCLO_method", "LOC_method"}));
+		metrica2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica2.setBounds(296, 351, 126, 22);
+		frame.getContentPane().add(metrica2);
+		
+		JComboBox metrica3 = new JComboBox();
+		metrica3.setModel(new DefaultComboBoxModel(new String[] {"WMC_class", "NOM_class", "LOC_class"}));
+		metrica3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica3.setBounds(10, 444, 126, 22);
+		frame.getContentPane().add(metrica3);
+		
+		JComboBox metrica4 = new JComboBox();
+		metrica4.setModel(new DefaultComboBoxModel(new String[] {"NOM_class", "WMC_class", "LOC_class"}));
+		metrica4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica4.setBounds(296, 444, 126, 22);
+		frame.getContentPane().add(metrica4);
+		
+		JScrollPane scrollPane_historico = new JScrollPane();
+		scrollPane_historico.setBounds(576, 302, 535, 195);
+		frame.getContentPane().add(scrollPane_historico);
+		
+		JTextArea textAreahistorico = new JTextArea();
+		scrollPane_historico.setViewportView(textAreahistorico);
+		try {
+			mostrarhistorico(textAreahistorico);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		JButton guardaregras = new JButton("Guardar Regras Definidas");
 		guardaregras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				escreverhistorico(metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()), metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
+				try {
+					mostrarhistorico(textAreahistorico);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		guardaregras.setBounds(180, 510, 175, 31);
@@ -229,10 +348,21 @@ public class Gui {
 		JButton avaliarcodesmells = new JButton("Detetar Code Smells");
 		avaliarcodesmells.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CodeSmells dialog = new CodeSmells();
+				dialog.setVisible(true);
+				try {
+					dialog.detecaoLongMethod(filepath + "/" + name + "_metrics.xls",metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()));
+					dialog.detecaoGodClass(filepath + "/" + name + "_metrics.xls",metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
+				} catch (NumberFormatException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		avaliarcodesmells.setBounds(364, 510, 193, 31);
 		frame.getContentPane().add(avaliarcodesmells);
+		
+		
 	}
 	
 	public void listAllFiles(File folder){
@@ -347,6 +477,44 @@ public class Gui {
 	}
 	public void setLocation() {
 		excelLocation = filepath + "/" + name + "_metrics.xls";
+	}
+	
+	public void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter("Histórico.txt", true); 
+			BufferedWriter writer2 = new BufferedWriter(writer);
+			writer2.newLine();
+			writer2.write("Long Method:");
+			writer2.newLine();
+			writer2.write(metrica1+ " > " + valor1 + " " + operador1 + " " + metrica2 + " > " + valor2);
+			writer2.newLine();
+			writer2.write("God Class:");
+			writer2.newLine();
+			writer2.write(metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4);
+			writer2.newLine();
+
+        writer2.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+	}
+	
+	public void mostrarhistorico (JTextArea TextArea) throws IOException {
+		FileReader reader;
+		try {
+			reader = new FileReader ("Histórico.txt");
+			BufferedReader reader2 = new BufferedReader (reader);
+			TextArea.read (reader2,null);
+			reader2.close();
+			TextArea.requestFocus();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
 
