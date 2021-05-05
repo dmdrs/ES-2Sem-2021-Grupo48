@@ -52,7 +52,7 @@ public class CodeSmellsDetecao implements Serializable {
 			org.apache.poi.ss.usermodel.Sheet sheet = workbookread2.getSheetAt(0);
 			HSSFRow colunacima = (HSSFRow) sheet.getRow(0);
 			colunacima.createCell(9).setCellValue("is Long Method");
-			if (andor1.equals("E")) {
+			
 				for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 					boolean a = false;
 					Row excelrow = sheet.getRow(i);
@@ -62,6 +62,7 @@ public class CodeSmellsDetecao implements Serializable {
 					String loc = loc_method.toString();
 					String cyclo = cyclo_method.toString();
 					DefaultTableModel model = (DefaultTableModel) tableLongMethod.getModel();
+					if (andor1.equals("E")) {
 					if (metrica1.equals("LOC_method")) {
 						if (Integer.parseInt(loc) > valor1 && Integer.parseInt(cyclo) > valor2) {
 							a = true;
@@ -77,17 +78,8 @@ public class CodeSmellsDetecao implements Serializable {
 					}
 					model.addRow(new Object[] { id, a });
 					excelrow.createCell(9).setCellValue(a);
-				}
+				
 			} else {
-				for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-					boolean a = false;
-					Row excelrow = sheet.getRow(i);
-					Cell id = excelrow.getCell(0);
-					Cell loc_method = excelrow.getCell(7);
-					Cell cyclo_method = excelrow.getCell(8);
-					String loc = loc_method.toString();
-					String cyclo = cyclo_method.toString();
-					DefaultTableModel model = (DefaultTableModel) tableLongMethod.getModel();
 					if (metrica1.equals("LOC_method")) {
 						if (Integer.parseInt(loc) > valor1 || Integer.parseInt(cyclo) > valor2) {
 							a = true;
@@ -113,6 +105,7 @@ public class CodeSmellsDetecao implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
 	public void detecaoGodClass (String file, String metrica3 , int valor3,  String andor2, String metrica4, int valor4) throws IOException {
 		try {
 			InputStream excelFile = new FileInputStream(file);

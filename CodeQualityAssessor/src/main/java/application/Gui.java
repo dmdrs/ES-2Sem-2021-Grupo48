@@ -120,68 +120,7 @@ public class Gui {
 		excelbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {				
-		            String excelname = filepath + "/" + name + "_metrics.xls" ;
-		            HSSFWorkbook workbook = new HSSFWorkbook();
-		            HSSFSheet sheet = workbook.createSheet("Code Smells");  
-		            setLocation();
-
-		            HSSFRow colunacima = sheet.createRow((short)0);
-		            colunacima.createCell(0).setCellValue("ID.");
-		            colunacima.createCell(1).setCellValue("Package");
-		            colunacima.createCell(2).setCellValue("class");
-		            colunacima.createCell(3).setCellValue("method");
-		            colunacima.createCell(4).setCellValue("NOM_class");
-		            colunacima.createCell(5).setCellValue("LOC_class");
-		            colunacima.createCell(6).setCellValue("WMC_class");
-		            colunacima.createCell(7).setCellValue("LOC_method");
-		            colunacima.createCell(8).setCellValue("CYCLO_method");
-		           
-		           
-		            System.out.println(Foo.getTotalCount());
-		            int a = 0;
-		            for(Foo foo : Foo.foos) {
-		           
-		            if(foo.getList().size()!=0 || foo.getCount()!=0) {
-		        	
-		            for(int i =0 ; i!= foo.getCount(); i++) {
-
-		            HSSFRow linham= sheet.createRow(a+i+1);
-		            	
-		            linham.createCell(0).setCellValue(Integer.toString(a+i+1));
-		            	
-		            linham.createCell(1).setCellValue(foo.getPackageName());
-		            
-		            String classname= foo.getFile().getName();
-		            String target=String.copyValueOf(".java".toCharArray());
-		            classname=classname.replace(target, "");
-		            linham.createCell(2).setCellValue(classname);
-		            	
-		            linham.createCell(3).setCellValue(foo.getList().get(i));
-		   
-		            linham.createCell(4).setCellValue(Integer.toString(foo.getCount()));
-		            
-		            linham.createCell(5).setCellValue(Integer.toString(foo.getLoc()));
-		            
-		            linham.createCell(6).setCellValue(Integer.toString(foo.getCycloCyclo()));
-		            
-		            linham.createCell(7).setCellValue(Integer.toString(foo.getListNr().get(i)));
-		           
-		            linham.createCell(8).setCellValue(Integer.toString(foo.getCycloCount().get(i)));
-
-
-		            }
-		            
-		          
-		            }
-		            a = a + foo.getCount();
-		            }
-		           
-		            
-		            FileOutputStream fileOut = new FileOutputStream(excelname);
-		            workbook.write(fileOut);
-		            fileOut.close();
-		            workbook.close();
-		            System.out.println("Your excel file has been generated!");
+					gerarexcel();
 
 		        } catch ( Exception ex ) {
 		            System.out.println(ex);
@@ -324,7 +263,7 @@ public class Gui {
 		JTextArea textAreahistorico = new JTextArea();
 		scrollPane_historico.setViewportView(textAreahistorico);
 		try {
-			mostrarhistorico(textAreahistorico);
+			Historico.mostrarhistorico(textAreahistorico);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -333,9 +272,9 @@ public class Gui {
 		JButton guardaregras = new JButton("Guardar Regras Definidas");
 		guardaregras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escreverhistorico(metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()), metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
+				Historico.escreverhistorico(metrica1.getSelectedItem().toString(), Integer.parseInt(textField1.getText()),  andor1.getSelectedItem().toString(), metrica2.getSelectedItem().toString(), Integer.parseInt(textField2.getText()), metrica3.getSelectedItem().toString(), Integer.parseInt(textField3.getText()), andor2.getSelectedItem().toString(), metrica4.getSelectedItem().toString(), Integer.parseInt(textField4.getText()));
 				try {
-					mostrarhistorico(textAreahistorico);
+					Historico.mostrarhistorico(textAreahistorico);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -385,7 +324,6 @@ public class Gui {
 	    }
 	  }
 	
-	//será que tem de ter algo para não ler imagens? perguntar ao prof
 	public void readContent(File file) throws IOException{
 	    System.out.println("reading file " + file.getCanonicalPath() );
 	    
@@ -398,6 +336,49 @@ public class Gui {
 		}
 	    
 	    }
+	public void gerarexcel() throws IOException {
+		String excelname = filepath + "/" + name + "_metrics.xls" ;
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Code Smells");  
+        setLocation();
+
+        HSSFRow colunacima = sheet.createRow((short)0);
+        colunacima.createCell(0).setCellValue("ID.");
+        colunacima.createCell(1).setCellValue("Package");
+        colunacima.createCell(2).setCellValue("class");
+        colunacima.createCell(3).setCellValue("method");
+        colunacima.createCell(4).setCellValue("NOM_class");
+        colunacima.createCell(5).setCellValue("LOC_class");
+        colunacima.createCell(6).setCellValue("WMC_class");
+        colunacima.createCell(7).setCellValue("LOC_method");
+        colunacima.createCell(8).setCellValue("CYCLO_method");
+       
+       
+        System.out.println(Foo.getTotalCount());
+        int a = 0;
+        for(Foo foo : Foo.foos) {
+       
+        if(foo.getList().size()!=0 || foo.getCount()!=0) {
+    	
+        for(int i =0 ; i!= foo.getCount(); i++) {
+
+        HSSFRow linham = foo.escreverMetricas(sheet, a, i);
+
+        }
+      
+        }
+        a = a + foo.getCount();
+        }
+       
+        
+        FileOutputStream fileOut = new FileOutputStream(excelname);
+        workbook.write(fileOut);
+        fileOut.close();
+        workbook.close();
+        System.out.println("Your excel file has been generated!");
+
+	}
+
 	public void importExcelToJtable() throws IOException {
 		ArrayList<String> packages = new ArrayList<String>();
 		ArrayList<String> classes = new ArrayList<String>();
@@ -479,42 +460,5 @@ public class Gui {
 		excelLocation = filepath + "/" + name + "_metrics.xls";
 	}
 	
-	public void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) {
-		FileWriter writer;
-		try {
-			writer = new FileWriter("Histórico.txt", true); 
-			BufferedWriter writer2 = new BufferedWriter(writer);
-			writer2.newLine();
-			writer2.write("Long Method:");
-			writer2.newLine();
-			writer2.write(metrica1+ " > " + valor1 + " " + operador1 + " " + metrica2 + " > " + valor2);
-			writer2.newLine();
-			writer2.write("God Class:");
-			writer2.newLine();
-			writer2.write(metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4);
-			writer2.newLine();
-
-        writer2.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-       
-	}
-	
-	public void mostrarhistorico (JTextArea TextArea) throws IOException {
-		FileReader reader;
-		try {
-			reader = new FileReader ("Histórico.txt");
-			BufferedReader reader2 = new BufferedReader (reader);
-			TextArea.read (reader2,null);
-			reader2.close();
-			TextArea.requestFocus();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 }
 
