@@ -30,7 +30,6 @@ public class CodeSmells extends JDialog {
 	private CodeSmellsDetecao codeSmellsDetecao = new CodeSmellsDetecao();
 	private CodeSmellsComparar codeSmellsComparar = new CodeSmellsComparar();
 	private final JPanel contentPanel = new JPanel();
-	private  JTable tableGodClass;
 	/**
 	 * Launch the application.
 	 */
@@ -80,8 +79,8 @@ public class CodeSmells extends JDialog {
 		scrollPane2.setBounds(573, 39, 493, 565);
 		contentPanel.add(scrollPane2);
 		
-		tableGodClass = new JTable();
-		tableGodClass.setModel(new DefaultTableModel(
+		codeSmellsDetecao.setTableGodClass(new JTable());
+		codeSmellsDetecao.getTableGodClass().setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -95,7 +94,7 @@ public class CodeSmells extends JDialog {
 				return columnTypes[columnIndex];
 			}
 		});
-		scrollPane2.setViewportView(tableGodClass);
+		scrollPane2.setViewportView(codeSmellsDetecao.getTableGodClass());
 		
 		JLabel lblLongMethod = new JLabel("Long Method:");
 		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 15));
