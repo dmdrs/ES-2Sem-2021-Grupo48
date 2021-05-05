@@ -6,10 +6,14 @@ package application;
  */
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
@@ -27,6 +31,7 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +54,10 @@ public class Gui {
 	private HSSFWorkbook workbookread;
 	protected String name;
 	protected String filepath;
+	private JTextField textField1;
+	private JTextField textField2;
+	private JTextField textField3;
+	private JTextField textField4;
 	protected ArrayList<String> classes = new ArrayList<String>();
 	private static String excelLocation;
 
@@ -218,6 +227,94 @@ public class Gui {
 		viewmetricsbutton.setBounds(10,510, 165, 31);
 		frame.getContentPane().add(viewmetricsbutton);
 		
+		JLabel labelLongMethod = new JLabel("Long Method:");
+		labelLongMethod.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelLongMethod.setBounds(10, 302, 121, 23);
+		frame.getContentPane().add(labelLongMethod);
+		
+		JLabel labelGodClass = new JLabel("God Class:");
+		labelGodClass.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelGodClass.setBounds(10, 394, 121, 23);
+		frame.getContentPane().add(labelGodClass);
+		
+		JLabel lblNewLabel = new JLabel(">");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(143, 353, 46, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel(">");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(432, 353, 46, 14);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel(">");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(143, 446, 46, 14);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel(">");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(432, 446, 46, 14);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		JComboBox andor1 = new JComboBox();
+		andor1.setModel(new DefaultComboBoxModel(new String[] {"E", "OU"}));
+		andor1.setBounds(239, 351, 47, 22);
+		frame.getContentPane().add(andor1);
+		
+		JComboBox andor2 = new JComboBox();
+		andor2.setModel(new DefaultComboBoxModel(new String[] {"E", "OU"}));
+		andor2.setBounds(239, 444, 47, 22);
+		frame.getContentPane().add(andor2);
+		
+		textField1 = new JTextField();
+		textField1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField1.setBounds(167, 352, 62, 20);
+		frame.getContentPane().add(textField1);
+		textField1.setColumns(10);
+		
+		textField2 = new JTextField();
+		textField2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField2.setColumns(10);
+		textField2.setBounds(454, 352, 62, 20);
+		frame.getContentPane().add(textField2);
+		
+		textField3 = new JTextField();
+		textField3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField3.setColumns(10);
+		textField3.setBounds(167, 445, 62, 20);
+		frame.getContentPane().add(textField3);
+		
+		textField4 = new JTextField();
+		textField4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField4.setColumns(10);
+		textField4.setBounds(454, 445, 62, 20);
+		frame.getContentPane().add(textField4);
+		
+		JComboBox metrica1 = new JComboBox();
+		metrica1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica1.setModel(new DefaultComboBoxModel(new String[] {"LOC_method", "CYCLO_method"}));
+		metrica1.setBounds(10, 351, 126, 22);
+		frame.getContentPane().add(metrica1);
+		
+		JComboBox metrica2 = new JComboBox();
+		metrica2.setModel(new DefaultComboBoxModel(new String[] {"CYCLO_method", "LOC_method"}));
+		metrica2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica2.setBounds(296, 351, 126, 22);
+		frame.getContentPane().add(metrica2);
+		
+		JComboBox metrica3 = new JComboBox();
+		metrica3.setModel(new DefaultComboBoxModel(new String[] {"WMC_class", "NOM_class", "LOC_class"}));
+		metrica3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica3.setBounds(10, 444, 126, 22);
+		frame.getContentPane().add(metrica3);
+		
+		JComboBox metrica4 = new JComboBox();
+		metrica4.setModel(new DefaultComboBoxModel(new String[] {"NOM_class", "WMC_class", "LOC_class"}));
+		metrica4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		metrica4.setBounds(296, 444, 126, 22);
+		frame.getContentPane().add(metrica4);
+		
 		JButton guardaregras = new JButton("Guardar Regras Definidas");
 		guardaregras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -233,6 +330,8 @@ public class Gui {
 		});
 		avaliarcodesmells.setBounds(364, 510, 193, 31);
 		frame.getContentPane().add(avaliarcodesmells);
+		
+		
 	}
 	
 	public void listAllFiles(File folder){
