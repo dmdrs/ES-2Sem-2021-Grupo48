@@ -31,7 +31,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchStmt;
 import com.github.javaparser.ast.stmt.WhileStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import metrics.LOC_class;
+
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.AND;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
@@ -89,10 +89,11 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 	
 
-	public class NOM_class  {
+	public class Metricas  {
 	    public static int counter;
 	    public static int cyclocounter;
 	    public static int cyclocountercounter;
+	    public static int linesOfCode;
 	
 	   static ArrayList<String> namesofmethods;
 	  static ArrayList<Integer> nrlinemethods;
@@ -108,10 +109,12 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	     cyclocounter= 0;
 	     cyclocountercounter=0;
 	   
+	     
 	     FileInputStream in = new FileInputStream( file);
-	     BufferedReader br  = new BufferedReader(new FileReader(file));
-	     LOC_class.LOC_Class(br);
-	try {
+	     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			linesOfCode = (int) br.lines().count();
+		}
+	     try {
 		
 	      namesofmethods = new ArrayList<String>();
 	      nrlinemethods = new ArrayList<Integer>();
@@ -130,23 +133,16 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    
 	      
 	    
-	      Foo fooo= new Foo(nameofpackage,file,namez,counter,LOC_class.linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
+	      Foo fooo= new Foo(nameofpackage,file,namez,counter,linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
 	      Foo.foos.add(fooo);
-	      for(Foo singlefoo : Foo.foos) {
-	    	
-	    	  //System.out.println("Package Name: "+nameofpackage +" File: "+singlefoo.getFile().getName()+" Methods: "+singlefoo.getList()+" Count: "+singlefoo.getCount());
-	    	 
-//	    		  System.out.println("Number of cyclo_methods in "+file.getName()+" is "+singlefoo.getCycloCount());
-	    	  
-	      }
+	      
 	      
 			
 	}finally {
     
 	}
 
-	       
-	        System.out.println("Number of methods in "+file.getName()+" is "+counter);
+	
 	    }
 
 	    private static class MethodVisitor extends VoidVisitorAdapter<Object> {
@@ -156,7 +152,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	            // here you can access the attributes of the method.
 	            // this method will be called for all methods in this 
 	            // CompilationUnit, including inner class methods
-	       //     System.out.println(n.getName()+""+n.getParameters());
+	     
 	        	
 	        	
 	        	cyclocounter = 1;
@@ -182,8 +178,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	        	
 	        	
     	        String s = n.getDeclarationAsString(false, false, false).substring(n.getDeclarationAsString(false, false, false).indexOf(n.getNameAsString()));
-        		namesofmethods.add(s.replaceAll(" ",""));
-//	            namesofmethods.add(n.getDeclarationAsString(false, false, false).replaceFirst(n.getTypeAsString()+" ", "").replaceAll(" ", ""));
+        		namesofmethods.add(s.replaceAll(" ",""));           
 	            int methodBodyLength = n.getRange().map(range -> range.end.line - range.begin.line).orElse(0);
 	            int x = Math.abs(methodBodyLength);
 	            nrlinemethods.add(x);

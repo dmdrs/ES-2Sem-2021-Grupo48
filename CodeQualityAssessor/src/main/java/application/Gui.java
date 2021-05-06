@@ -46,8 +46,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 
 import metrics.Foo;
-import metrics.NOM_class;
-import metrics.LOC_class;
+import metrics.Metricas;
 
 public class Gui {
 
@@ -106,7 +105,7 @@ public class Gui {
 	               File file = fileChooser.getSelectedFile();
 	               filepath =  (String) file.getAbsolutePath();
 	               name = (String) file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\")+1);
-	               System.out.println("Folder Selected: " + filepath);
+	              
 	               listAllFiles (file);
 	            }else{
 	            	System.out.println("Open command canceled");
@@ -325,10 +324,10 @@ public class Gui {
 	  }
 	
 	public void readContent(File file) throws IOException{
-	    System.out.println("reading file " + file.getCanonicalPath() );
+	  
 	    
 	    try {
-			NOM_class.main(file);
+			Metricas.main(file);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -354,7 +353,7 @@ public class Gui {
         colunacima.createCell(8).setCellValue("CYCLO_method");
        
        
-        System.out.println(Foo.getTotalCount());
+       
         int a = 0;
         for(Foo foo : Foo.foos) {
        
@@ -375,7 +374,7 @@ public class Gui {
         workbook.write(fileOut);
         fileOut.close();
         workbook.close();
-        System.out.println("Your excel file has been generated!");
+       
 
 	}
 
