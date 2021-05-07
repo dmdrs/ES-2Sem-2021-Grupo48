@@ -9,18 +9,18 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <name>CodeQualityAssessor</name>
-  <description>A simple CodeQualityAssessor.</description>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/dmdrs/ES-2Sem-2021-Grupo48</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    
+    <junit-platform.version>5.3.1</junit-platform.version>
+    
   </properties>
 
-  <dependencies>
-  
+<dependencies>
   <dependency>
     <groupId>com.github.javaparser</groupId>
     <artifactId>javaparser-symbol-solver-core</artifactId>
@@ -51,12 +51,56 @@
     <artifactId>metrics-core</artifactId>
     <version>4.1.16</version>
 </dependency>
+
+
+  
+
+        <!-- junit 5, unit test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+ <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.3.1</version>
+        </dependency>
     
-  </dependencies>
+    
+    
+    
+</dependencies>
 
   <build>
+  
+  
+  
+
+    
+  
+  
+  
+  
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
+    
+    
+    
+    
+    
+    
+   
+        <plugins>
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
@@ -98,6 +142,7 @@
     </pluginManagement>
   </build>
 
+
   <reporting>
     <plugins>
       <plugin>
@@ -105,4 +150,5 @@
       </plugin>
     </plugins>
   </reporting>
+  <description>Desenvolvimento da aplicacao CodeQualityAssessor para a disciplina de Engenharia de Software.</description>
 </project>
