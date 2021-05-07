@@ -1,12 +1,14 @@
 /**
  * 
  */
-package tests;
+package application;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import org.junit.Assert;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,8 +39,12 @@ class CodeSmellsCompararTest {
 	*/
 	@Test
 	void groupedAssertions() {
-		Assert.assertNotNull(csc1.getVP1()); 
-		fail("Not yet implemented");
+		assertNotNull(csc1.getVP1()); 
+	}
+	
+	@Test
+	void testCompararLongMethod() {
+		assertThrows(IOException.class, () -> csc1.compararLongMethod(),"O método deve lançar IOException");
 	}
 /*	
 	@Test
