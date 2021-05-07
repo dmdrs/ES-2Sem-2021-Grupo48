@@ -20,6 +20,7 @@ class ChartTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		System.out.println("hey");
 	}
 
 	@AfterEach
@@ -27,8 +28,7 @@ class ChartTest {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testh() {
 	}
 
 }
