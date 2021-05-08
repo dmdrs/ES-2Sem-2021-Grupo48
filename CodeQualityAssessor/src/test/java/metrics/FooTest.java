@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
  * @author 1
  *
  */
+
+
 class FooTest {
 
 	/**
@@ -44,6 +46,7 @@ class FooTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		foos = new ArrayList<Foo>();

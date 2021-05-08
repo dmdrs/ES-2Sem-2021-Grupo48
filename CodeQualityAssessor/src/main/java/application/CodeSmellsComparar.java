@@ -23,7 +23,9 @@ public class CodeSmellsComparar implements Serializable {
 	private int FP2;
 	private int VN2;
 	private int FN2;
-
+	InputStream excelFile;
+	InputStream excelFile3;
+	
 	public int getVP1() {
 		return VP1;
 	}
@@ -56,11 +58,63 @@ public class CodeSmellsComparar implements Serializable {
 		return FN2;
 	}
 
+	public void setWorkbookread(HSSFWorkbook workbookread) {
+		setExcelFile(excelFile);
+		try {
+			this.workbookread = new HSSFWorkbook(excelFile);
+		} catch (IOException e) {
+			System.out.println("Warning - Excel do user");
+			e.printStackTrace();
+		}
+	}
+
+	public void setWorkbookread3(HSSFWorkbook workbookread3) {
+		setExcelFile3(excelFile3);
+		try {
+			this.workbookread3 = new HSSFWorkbook(excelFile3);
+		} catch (IOException e) {
+			System.out.println("Excel de orientação");
+			e.printStackTrace();
+		}
+	}
+
+	public void setExcelFile(InputStream excelFile) {
+		
+			if(excelFile != null)this.excelFile = excelFile;
+			else {
+		
+			try {
+				this.excelFile = new FileInputStream(Gui.getLocation());
+			} catch (FileNotFoundException e) {
+				System.out.println("Warning - Localizacao do file do user");
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void setExcelFile3(InputStream excelFile3) {
+		try {
+			this.excelFile3 = new FileInputStream("Code_Smells.xls");
+		} catch (FileNotFoundException e) {
+			System.out.println("Warning - Localizacao do file de orientação");
+			e.printStackTrace();
+		}
+	}
+
+	
+	public InputStream getExcelFile() {
+		return excelFile;
+	}
+
+	public InputStream getExcelFile3() {
+		return excelFile3;
+	}
+
 	public void compararLongMethod() throws IOException {
 		VP1 = 0;
 		FP1 = 0;
 		VN1 = 0;
-		FN1 = 0;
+		FN1 = 0;	
 		InputStream excelFile = new FileInputStream(Gui.getLocation());
 		workbookread = new HSSFWorkbook(excelFile);
 		org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
@@ -95,6 +149,7 @@ public class CodeSmellsComparar implements Serializable {
 			}
 		}
 	}
+
 
 	public void compararGodClass() throws IOException {
 		VP2 = 0;
