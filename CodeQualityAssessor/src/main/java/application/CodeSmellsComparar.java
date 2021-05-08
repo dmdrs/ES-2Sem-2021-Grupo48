@@ -58,49 +58,28 @@ public class CodeSmellsComparar implements Serializable {
 		return FN2;
 	}
 
-	public void setWorkbookread(HSSFWorkbook workbookread) {
+	public void setWorkbookread(HSSFWorkbook workbookread) throws IOException {
 		setExcelFile(excelFile);
-		try {
-			this.workbookread = new HSSFWorkbook(excelFile);
-		} catch (IOException e) {
-			System.out.println("Warning - Excel do user");
-			e.printStackTrace();
-		}
+		this.workbookread = new HSSFWorkbook(excelFile);
 	}
 
-	public void setWorkbookread3(HSSFWorkbook workbookread3) {
-		setExcelFile3(excelFile3);
-		try {
-			this.workbookread3 = new HSSFWorkbook(excelFile3);
-		} catch (IOException e) {
-			System.out.println("Excel de orientação");
-			e.printStackTrace();
-		}
+	public void setWorkbookread3() throws IOException {
+		setExcelFile3();
+		this.workbookread3 = new HSSFWorkbook(excelFile3);
 	}
 
-	public void setExcelFile(InputStream excelFile) {
+	public void setExcelFile(InputStream excelFile) throws IOException {
 		
-			if(excelFile != null)this.excelFile = excelFile;
-			else {
-		
-			try {
-				this.excelFile = new FileInputStream(Gui.getLocation());
-			} catch (FileNotFoundException e) {
-				System.out.println("Warning - Localizacao do file do user");
-				e.printStackTrace();
-			}
+		if(excelFile != null) this.excelFile = excelFile;
+		else {
+			this.excelFile = new FileInputStream(Gui.getLocation());
 		}
 	}
 
-	public void setExcelFile3(InputStream excelFile3) {
-		try {
+	public void setExcelFile3() throws IOException {
 			this.excelFile3 = new FileInputStream("Code_Smells.xls");
-		} catch (FileNotFoundException e) {
-			System.out.println("Warning - Localizacao do file de orientação");
-			e.printStackTrace();
-		}
-	}
 
+	}
 	
 	public InputStream getExcelFile() {
 		return excelFile;
@@ -109,18 +88,30 @@ public class CodeSmellsComparar implements Serializable {
 	public InputStream getExcelFile3() {
 		return excelFile3;
 	}
+	
+	public HSSFWorkbook getWorkbookread() {
+		return workbookread;
+	}
 
-	public void compararLongMethod() throws IOException {
+	public HSSFWorkbook getWorkbookread3() {
+		return workbookread3;
+	}
+
+	public void interact3() throws IOException {
 		VP1 = 0;
 		FP1 = 0;
 		VN1 = 0;
-		FN1 = 0;	
+		FN1 = 0;
+		setExcelFile3();
+		workbookread3 = new HSSFWorkbook(excelFile3);	
+	}
+	
+	public void compararLongMethod() throws IOException {
+		interact3();
+		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
 		InputStream excelFile = new FileInputStream(Gui.getLocation());
 		workbookread = new HSSFWorkbook(excelFile);
 		org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
-		InputStream excelFile3 = new FileInputStream("Code_Smells.xls");
-		workbookread3 = new HSSFWorkbook(excelFile3);
-		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row excelrow = sheet.getRow(i);
 			Cell classname = excelrow.getCell(2);
@@ -152,16 +143,11 @@ public class CodeSmellsComparar implements Serializable {
 
 
 	public void compararGodClass() throws IOException {
-		VP2 = 0;
-		FP2 = 0;
-		VN2 = 0;
-		FN2 = 0;
+		interact3();
+		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
 		InputStream excelFile = new FileInputStream(Gui.getLocation());
 		workbookread = new HSSFWorkbook(excelFile);
 		org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
-		InputStream excelFile3 = new FileInputStream("Code_Smells.xls");
-		workbookread3 = new HSSFWorkbook(excelFile3);
-		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row excelrow = sheet.getRow(i);
 			Cell classname = excelrow.getCell(2);

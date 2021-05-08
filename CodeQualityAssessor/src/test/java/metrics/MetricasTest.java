@@ -11,11 +11,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+
 /**
  * @author 1
  *
  */
 class MetricasTest {
+
+	static Metricas m1;
 
 	/**
 	 * @throws java.lang.Exception
