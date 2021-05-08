@@ -32,23 +32,20 @@ class CodeSmellsCompararTest {
 	HSSFWorkbook workbookread;
 	HSSFWorkbook workbookread3;
 	
-	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		System.out.println(">>>>>>>>> Before all." + enterKey);
+		System.out.println(">>>>>>>>> Before all class tests." + enterKey);
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		System.out.println("After all. <<<<<<<<<<");
-
+		System.out.println("After all class tests. <<<<<<<<<<");
 	}
 
 	@BeforeEach
 	void setUp(TestInfo testInfo) throws Exception {
 		System.out.println("Before each: <<"+ testInfo.getDisplayName() + ">> in " + this);
-		csc1=new CodeSmellsComparar();
-		
+		csc1=new CodeSmellsComparar();	
 	}
 
 	@AfterEach
@@ -56,14 +53,12 @@ class CodeSmellsCompararTest {
 		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
 	}
 
-
 	@Nested
 	@DisplayName("Testar CompararLongMethod()")
 	class testCompararLongMethod{
-
 		
 		@Test
-		@DisplayName("Testar Valores VP1, FP1, VN1, FN1 no início do método.")
+		@DisplayName("Testar Valores VP1, FP1, VN1, FN1 no início do método setWorkbookread3().")
 		void testGetValues() {
 			assertEquals(0,csc1.getVP1(),"O valor é 0.");
 			assertEquals(0,csc1.getFP1(),"O valor é 0.");
@@ -72,49 +67,27 @@ class CodeSmellsCompararTest {
 		}
 		
 		@Test
-		@DisplayName("Testar se file guia codesmells existe")
+		@DisplayName("Testar se file guia codesmells existe.")
 		void testSetExcelFile3() throws FileNotFoundException,IOException {
-			//FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls");
-			System.out.println("testingggggggggg");
+			//FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls"); //teria de se converter para string
 			csc1.setExcelFile3();
 			excelFile3 = csc1.getExcelFile3();
-			assertNotNull(excelFile3, "Está a nulo(!)");
-
+			assertNotNull(excelFile3, "Está a nulo/guia codesmells inexistente(!)");
 
 			System.out.println("ATENÇAOOOOOOOOOOOOOOOOO" + " - " + excelFile3);
-		//	assertEquals(testExcelFile3,excelFile3);
+		// converter excelFile3 para string
+		//	assertEquals(testExcelFile3,excelFile3); comparar a ver se o ficheiro é o de nome "Code_Smells.xls"
 		//	assertThrows(FileNotFoundException.class, () -> csc1.setExcelFile3(excelFile3),"O método deve lançar FileNotFoundException");
-			
-			//csc1.setExcelFile3(excelFile3);
-			//workbookread3 = new HSSFWorkbook(excelFile3);
-			//csc1.setWorkbookread3(workbookread3);
-			
 		}
 		
 		@Test
 		@DisplayName("Testar se projeto já existe na localizaçao -- tentar dps Gui.location()")
 		void testSetExcelFile() throws FileNotFoundException,IOException {
-			//InputStream testExcelFile = new FileInputStream(Gui.getLocation());
-/*
-			try {
-				excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
-				csc1.setExcelFile(excelFile);
-				excelFile = csc1.getExcelFile();
-				assertNotNull(excelFile3, "Está a nulo(!)");
-				System.out.println("ATENÇAOOOOOOOOOOOOOOOOO______GUIIIIRDO"  + testExcelFile + " - " + excelFile);
-				assertEquals(testExcelFile,excelFile);
-			} catch (FileNotFoundException e) {
-				System.out.println("Ficheiro não existe no caminho indicado");
-				e.printStackTrace();
-			}	
-			*/
-			
 			excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
 			csc1.setExcelFile(excelFile);
 			//csc1.compararLongMethod();
 			System.out.println("try");
-			assertNotNull(excelFile, "getLocation(!)"); 
-
+			assertNotNull(excelFile, "Projeto não existe na localização(!)"); 
 		}
 		
 		@Test
@@ -128,20 +101,18 @@ class CodeSmellsCompararTest {
 			
 			csc1.setWorkbookread3();
 
-
 			System.out.println("ATENÇAOOOOOOOOOOOOOOOOO" + " - " + excelFile3);
 		//	assertEquals(testExcelFile3,excelFile3);
 		//	assertThrows(FileNotFoundException.class, () -> csc1.setExcelFile3(excelFile3),"O método deve lançar FileNotFoundException");
 			
 			//csc1.setExcelFile3(excelFile3);
 			//workbookread3 = new HSSFWorkbook(excelFile3);
-			//csc1.setWorkbookread3(workbookread3);
-			
+			//csc1.setWorkbookread3(workbookread3);	
 		}
 		
 		@Test
 		@DisplayName("Testar se projeto já existe na localizaçao -- tentar dps Gui.location()")
-		void testSetExcelFile() throws FileNotFoundException,IOException {
+		void testSetWorkbookread() throws FileNotFoundException,IOException {
 			//InputStream testExcelFile = new FileInputStream(Gui.getLocation());
 /*
 			try {
@@ -156,13 +127,11 @@ class CodeSmellsCompararTest {
 				e.printStackTrace();
 			}	
 			*/
-			
 			excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
 			csc1.setExcelFile(excelFile);
 			//csc1.compararLongMethod();
 			System.out.println("try");
 			assertNotNull(excelFile, "getLocation(!)"); 
-
 		}
 		
 		@Test
@@ -238,7 +207,9 @@ class CodeSmellsCompararTest {
 		void testGetFile() {
 		//	assertThrows(IOException.class, () -> csc1.compararLongMethod(),"O método deve lançar IOException");
 		}
+		
 	}
+	
 }
 
 

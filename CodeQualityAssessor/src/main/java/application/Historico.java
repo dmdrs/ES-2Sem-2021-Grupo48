@@ -11,11 +11,15 @@ import javax.swing.JTextArea;
 
 public class Historico {
 	
+	private static FileWriter writer;
+	private static BufferedWriter writer2;
+	private static FileReader reader;
+	private static BufferedReader reader2;
+
 	public static void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) {
-		FileWriter writer;
 		try {
 			writer = new FileWriter("Histórico.txt", true); 
-			BufferedWriter writer2 = new BufferedWriter(writer);
+			writer2 = new BufferedWriter(writer);
 			writer2.newLine();
 			writer2.write("Long Method:");
 			writer2.newLine();
@@ -35,10 +39,9 @@ public class Historico {
 	}
 	
 	public static void mostrarhistorico (JTextArea TextArea) throws IOException {
-		FileReader reader;
 		try {
 			reader = new FileReader ("Histórico.txt");
-			BufferedReader reader2 = new BufferedReader (reader);
+			reader2 = new BufferedReader (reader);
 			TextArea.read (reader2,null);
 			reader2.close();
 			TextArea.requestFocus();

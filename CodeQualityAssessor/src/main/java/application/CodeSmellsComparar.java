@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class CodeSmellsComparar implements Serializable {
 	private HSSFWorkbook workbookread;
-	private HSSFWorkbook workbookread3;
+	private HSSFWorkbook workbookreadGuia;
 	private int VP1;
 	private int FP1;
 	private int VN1;
@@ -23,8 +23,20 @@ public class CodeSmellsComparar implements Serializable {
 	private int FP2;
 	private int VN2;
 	private int FN2;
-	InputStream excelFile;
-	InputStream excelFile3;
+	private InputStream excelFile;
+	private InputStream excelFileGuia;
+	private org.apache.poi.ss.usermodel.Sheet sheet;
+	private org.apache.poi.ss.usermodel.Sheet sheetGuia;
+	private Row excelrow;
+	private Cell classname;
+	private Cell methodname;
+	private Cell isLongMethod;
+	private Row excelrow2;
+	private Cell classname2;
+	private Cell methodname2;
+	private Cell isLongMethod2;
+	private Cell isGodClass;
+	
 	
 	public int getVP1() {
 		return VP1;
@@ -57,17 +69,7 @@ public class CodeSmellsComparar implements Serializable {
 	public int getFN2() {
 		return FN2;
 	}
-
-	public void setWorkbookread(HSSFWorkbook workbookread) throws IOException {
-		setExcelFile(excelFile);
-		this.workbookread = new HSSFWorkbook(excelFile);
-	}
-
-	public void setWorkbookread3() throws IOException {
-		setExcelFile3();
-		this.workbookread3 = new HSSFWorkbook(excelFile3);
-	}
-
+	
 	public void setExcelFile(InputStream excelFile) throws IOException {
 		
 		if(excelFile != null) this.excelFile = excelFile;
@@ -77,7 +79,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public void setExcelFile3() throws IOException {
-			this.excelFile3 = new FileInputStream("Code_Smells.xls");
+			this.excelFileGuia = new FileInputStream("Code_Smells.xls");
 
 	}
 	
@@ -86,7 +88,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public InputStream getExcelFile3() {
-		return excelFile3;
+		return excelFileGuia;
 	}
 	
 	public HSSFWorkbook getWorkbookread() {
@@ -94,31 +96,79 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public HSSFWorkbook getWorkbookread3() {
-		return workbookread3;
+		return workbookreadGuia;
 	}
 
-	public void interact3() throws IOException {
+	public void setWorkbookread3() throws IOException {
 		VP1 = 0;
 		FP1 = 0;
 		VN1 = 0;
 		FN1 = 0;
 		setExcelFile3();
-		workbookread3 = new HSSFWorkbook(excelFile3);	
+		this.workbookreadGuia = new HSSFWorkbook(excelFileGuia);	
+		sheetGuia = workbookreadGuia.getSheetAt(0);
+	}
+
+	public void setWorkbookread(HSSFWorkbook workbookread) throws IOException {
+		setExcelFile(excelFile);
+		this.workbookread = new HSSFWorkbook(excelFile);
+		sheet = workbookread.getSheetAt(0);
 	}
 	
+/*	public void goThroughSheet() {
+		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+			excelrow = sheet.getRow(i);
+			classname = excelrow.getCell(2);
+			methodname = excelrow.getCell(3);
+			isLongMethod = excelrow.getCell(9);
+			isGodClass = excelrow.getCell(10);
+			goLongMethod();
+		}
+	}
+	private void goLongMethod() {
+		// TODO Auto-generated method stub
+		
+	}*/
+
+	/*
+	private void goThroughSheetGuia() {
+		for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
+			excelrow2 = sheetGuia.getRow(j);
+			classname2 = excelrow2.getCell(2);
+			methodname2 = excelrow2.getCell(3);
+			isLongMethod2 = excelrow2.getCell(10);
+			conditions();
+		}
+	}
+
+	private void conditions() {
+		if (classname.toString().equals(classname2.toString())
+				&& methodname.toString().equals(methodname2.toString())) {
+			if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == true) {
+				VP1++;
+			}
+			if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == false) {
+				FP1++;
+			}
+			if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == false) {
+				VN1++;
+			}
+			if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == true) {
+				FN1++;
+			}
+		}		
+	}*/
+
 	public void compararLongMethod() throws IOException {
-		interact3();
-		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
-		InputStream excelFile = new FileInputStream(Gui.getLocation());
-		workbookread = new HSSFWorkbook(excelFile);
-		org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
+		setWorkbookread3();
+		setWorkbookread(workbookread);
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row excelrow = sheet.getRow(i);
 			Cell classname = excelrow.getCell(2);
 			Cell methodname = excelrow.getCell(3);
 			Cell isLongMethod = excelrow.getCell(9);
-			for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
-				Row excelrow2 = sheet3.getRow(j);
+			for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
+				Row excelrow2 = sheetGuia.getRow(j);
 				Cell classname2 = excelrow2.getCell(2);
 				Cell methodname2 = excelrow2.getCell(3);
 				Cell isLongMethod2 = excelrow2.getCell(10);
@@ -143,18 +193,15 @@ public class CodeSmellsComparar implements Serializable {
 
 
 	public void compararGodClass() throws IOException {
-		interact3();
-		org.apache.poi.ss.usermodel.Sheet sheet3 = workbookread3.getSheetAt(0);
-		InputStream excelFile = new FileInputStream(Gui.getLocation());
-		workbookread = new HSSFWorkbook(excelFile);
-		org.apache.poi.ss.usermodel.Sheet sheet = workbookread.getSheetAt(0);
+		setWorkbookread3();
+		setWorkbookread(workbookread);
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row excelrow = sheet.getRow(i);
 			Cell classname = excelrow.getCell(2);
 			Cell isGodClass = excelrow.getCell(10);
 			if (isGodClass != null) {
-				for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
-					Row excelrow2 = sheet3.getRow(j);
+				for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
+					Row excelrow2 = sheetGuia.getRow(j);
 					Cell classname2 = excelrow2.getCell(2);
 					Cell isGodClass2 = excelrow2.getCell(7);
 					if (classname.toString().equals(classname2.toString())) {
@@ -170,7 +217,7 @@ public class CodeSmellsComparar implements Serializable {
 						if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == true) {
 							FN2++;
 						}
-						j = sheet3.getLastRowNum();
+						j = sheetGuia.getLastRowNum();
 					}
 				}
 			}
