@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class CodeSmellsComparar implements Serializable {
 	private HSSFWorkbook workbookread;
-	private HSSFWorkbook workbookreadGuia;
+	private HSSFWorkbook workbookread3;
 	private int VP1;
 	private int FP1;
 	private int VN1;
@@ -24,9 +24,9 @@ public class CodeSmellsComparar implements Serializable {
 	private int VN2;
 	private int FN2;
 	private InputStream excelFile;
-	private InputStream excelFileGuia;
+	private InputStream excelFile3;
 	private org.apache.poi.ss.usermodel.Sheet sheet;
-	private org.apache.poi.ss.usermodel.Sheet sheetGuia;
+	private org.apache.poi.ss.usermodel.Sheet sheet3;
 	private Row excelrow;
 	private Cell classname;
 	private Cell methodname;
@@ -79,7 +79,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public void setExcelFile3() throws IOException {
-			this.excelFileGuia = new FileInputStream("Code_Smells.xls");
+			this.excelFile3 = new FileInputStream("Code_Smells.xls");
 
 	}
 	
@@ -88,7 +88,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public InputStream getExcelFile3() {
-		return excelFileGuia;
+		return excelFile3;
 	}
 	
 	public HSSFWorkbook getWorkbookread() {
@@ -96,7 +96,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public HSSFWorkbook getWorkbookread3() {
-		return workbookreadGuia;
+		return workbookread3;
 	}
 
 	public void setWorkbookread3() throws IOException {
@@ -105,8 +105,8 @@ public class CodeSmellsComparar implements Serializable {
 		VN1 = 0;
 		FN1 = 0;
 		setExcelFile3();
-		this.workbookreadGuia = new HSSFWorkbook(excelFileGuia);	
-		sheetGuia = workbookreadGuia.getSheetAt(0);
+		this.workbookread3 = new HSSFWorkbook(excelFile3);	
+		sheet3 = workbookread3.getSheetAt(0);
 	}
 
 	public void setWorkbookread(HSSFWorkbook workbookread) throws IOException {
@@ -167,8 +167,8 @@ public class CodeSmellsComparar implements Serializable {
 			Cell classname = excelrow.getCell(2);
 			Cell methodname = excelrow.getCell(3);
 			Cell isLongMethod = excelrow.getCell(9);
-			for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
-				Row excelrow2 = sheetGuia.getRow(j);
+			for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
+				Row excelrow2 = sheet3.getRow(j);
 				Cell classname2 = excelrow2.getCell(2);
 				Cell methodname2 = excelrow2.getCell(3);
 				Cell isLongMethod2 = excelrow2.getCell(10);
@@ -200,8 +200,8 @@ public class CodeSmellsComparar implements Serializable {
 			Cell classname = excelrow.getCell(2);
 			Cell isGodClass = excelrow.getCell(10);
 			if (isGodClass != null) {
-				for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
-					Row excelrow2 = sheetGuia.getRow(j);
+				for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
+					Row excelrow2 = sheet3.getRow(j);
 					Cell classname2 = excelrow2.getCell(2);
 					Cell isGodClass2 = excelrow2.getCell(7);
 					if (classname.toString().equals(classname2.toString())) {
@@ -217,7 +217,7 @@ public class CodeSmellsComparar implements Serializable {
 						if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == true) {
 							FN2++;
 						}
-						j = sheetGuia.getLastRowNum();
+						j = sheet3.getLastRowNum();
 					}
 				}
 			}

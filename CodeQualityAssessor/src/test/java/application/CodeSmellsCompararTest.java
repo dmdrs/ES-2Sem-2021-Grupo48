@@ -27,8 +27,8 @@ class CodeSmellsCompararTest {
 
 	static String enterKey = System.getProperty("line.separator");
 	static CodeSmellsComparar csc1;
-	InputStream excelFile;
-	InputStream excelFile3;
+	private InputStream excelFile;
+	private InputStream excelFile3;
 	HSSFWorkbook workbookread;
 	HSSFWorkbook workbookread3;
 	
@@ -69,12 +69,23 @@ class CodeSmellsCompararTest {
 		@Test
 		@DisplayName("Testar se file guia codesmells existe.")
 		void testSetExcelFile3() throws FileNotFoundException,IOException {
-			//FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls"); //teria de se converter para string
+			
 			csc1.setExcelFile3();
 			excelFile3 = csc1.getExcelFile3();
-			assertNotNull(excelFile3, "Está a nulo/guia codesmells inexistente(!)");
+			assertNotNull(excelFile3, "Ficheiro Code_Smells.xls inexistente(!)");
 
 			System.out.println("ATENÇAOOOOOOOOOOOOOOOOO" + " - " + excelFile3);
+			
+
+			FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls"); //tenho de converter para string
+			InputStream test= new FileInputStream("Code_Smells2.xls");
+			String testmessage = org.apache.commons.io.IOUtils.toString(test);
+			String message = org.apache.commons.io.IOUtils.toString(excelFile3);
+
+			assertEquals(testmessage,message, "Não é o mesmo ficheiro(!)");
+			
+			System.out.println("deu" + testmessage + "========="+message);
+			
 		// converter excelFile3 para string
 		//	assertEquals(testExcelFile3,excelFile3); comparar a ver se o ficheiro é o de nome "Code_Smells.xls"
 		//	assertThrows(FileNotFoundException.class, () -> csc1.setExcelFile3(excelFile3),"O método deve lançar FileNotFoundException");

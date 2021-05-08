@@ -4,3 +4,28 @@ Long Method:
 LOC_method > 20 E CYCLO_method > 20
 God Class:
 WMC_class > 20 E NOM_class > 20
+
+Long Method:
+LOC_method > 50 E CYCLO_method > 4
+God Class:
+WMC_class > 4 E NOM_class > 4
+
+Long Method:
+LOC_method > 30 E CYCLO_method > 20
+God Class:
+WMC_class > 10 E NOM_class > 0
+
+Long Method:
+LOC_method > 30 E CYCLO_method > 20
+God Class:
+WMC_class > 10 E NOM_class > 0
+
+Long Method:
+LOC_method > 30 E CYCLO_method > 20
+God Class:
+WMC_class > 10 E NOM_class > 0
+
+Long Method:
+LOC_method > 30 E CYCLO_method > 20
+God Class:
+WMC_class > 10 E NOM_class > 0

@@ -51,4 +51,21 @@ public class Historico {
 		}
 		
 	}
+
+	public FileWriter getWriter() {
+		return writer;
+	}
+
+	public BufferedWriter getWriter2() {
+		return writer2;
+	}
+
+	public FileReader getReader() {
+		return reader;
+	}
+
+	public BufferedReader getReader2() {
+		return reader2;
+	}
+
 }
