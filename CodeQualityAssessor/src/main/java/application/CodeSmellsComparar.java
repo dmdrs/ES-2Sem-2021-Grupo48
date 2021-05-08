@@ -27,15 +27,16 @@ public class CodeSmellsComparar implements Serializable {
 	private InputStream excelFile3;
 	private org.apache.poi.ss.usermodel.Sheet sheet;
 	private org.apache.poi.ss.usermodel.Sheet sheet3;
-	private Row excelrow;
+	//private Row excelrow;
 	private Cell classname;
 	private Cell methodname;
 	private Cell isLongMethod;
-	private Row excelrow2;
+	/*private Row excelrow2;
 	private Cell classname2;
 	private Cell methodname2;
-	private Cell isLongMethod2;
+	private Cell isLongMethod2;*/
 	private Cell isGodClass;
+	private int lastRowNum;
 	
 	
 	public int getVP1() {
@@ -90,139 +91,106 @@ public class CodeSmellsComparar implements Serializable {
 	public InputStream getExcelFile3() {
 		return excelFile3;
 	}
+
+	public int getLastRowNum() {
+		return lastRowNum;
+	}
+
+	public void setLastRowNum(int lastRowNum) {
+		this.lastRowNum = lastRowNum;
+	}
 	
-	public HSSFWorkbook getWorkbookread() {
-		return workbookread;
-	}
-
-	public HSSFWorkbook getWorkbookread3() {
-		return workbookread3;
-	}
-
 	public void setWorkbookread3() throws IOException {
 		VP1 = 0;
 		FP1 = 0;
 		VN1 = 0;
 		FN1 = 0;
 		setExcelFile3();
-		this.workbookread3 = new HSSFWorkbook(excelFile3);	
+		workbookread3 = new HSSFWorkbook(excelFile3);	
 		sheet3 = workbookread3.getSheetAt(0);
 	}
 
-	public void setWorkbookread(HSSFWorkbook workbookread) throws IOException {
+	public void setWorkbookread() throws IOException {
 		setExcelFile(excelFile);
-		this.workbookread = new HSSFWorkbook(excelFile);
+		workbookread = new HSSFWorkbook(excelFile);
 		sheet = workbookread.getSheetAt(0);
 	}
-	
-/*	public void goThroughSheet() {
-		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-			excelrow = sheet.getRow(i);
+
+	public void goThroughSheet() {
+		setLastRowNum(sheet.getLastRowNum());
+		//lastRowNum = sheet.getLastRowNum();
+		for (int i = 1; i <= lastRowNum; i++) {
+			Row excelrow = sheet.getRow(i);
 			classname = excelrow.getCell(2);
 			methodname = excelrow.getCell(3);
 			isLongMethod = excelrow.getCell(9);
 			isGodClass = excelrow.getCell(10);
-			goLongMethod();
-		}
-	}
-	private void goLongMethod() {
-		// TODO Auto-generated method stub
-		
-	}*/
-
-	/*
-	private void goThroughSheetGuia() {
-		for (int j = 1; j <= sheetGuia.getLastRowNum(); j++) {
-			excelrow2 = sheetGuia.getRow(j);
-			classname2 = excelrow2.getCell(2);
-			methodname2 = excelrow2.getCell(3);
-			isLongMethod2 = excelrow2.getCell(10);
-			conditions();
+			forLongMethod();
+			if (isGodClass != null) {
+				forGodClass();
+			}
 		}
 	}
 
-	private void conditions() {
-		if (classname.toString().equals(classname2.toString())
-				&& methodname.toString().equals(methodname2.toString())) {
-			if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == true) {
-				VP1++;
-			}
-			if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == false) {
-				FP1++;
-			}
-			if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == false) {
-				VN1++;
-			}
-			if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == true) {
-				FN1++;
-			}
-		}		
-	}*/
-
-	public void compararLongMethod() throws IOException {
-		setWorkbookread3();
-		setWorkbookread(workbookread);
-		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-			Row excelrow = sheet.getRow(i);
-			Cell classname = excelrow.getCell(2);
-			Cell methodname = excelrow.getCell(3);
-			Cell isLongMethod = excelrow.getCell(9);
-			for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
-				Row excelrow2 = sheet3.getRow(j);
-				Cell classname2 = excelrow2.getCell(2);
-				Cell methodname2 = excelrow2.getCell(3);
-				Cell isLongMethod2 = excelrow2.getCell(10);
-				if (classname.toString().equals(classname2.toString())
-						&& methodname.toString().equals(methodname2.toString())) {
-					if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == true) {
-						VP1++;
-					}
-					if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == false) {
-						FP1++;
-					}
-					if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == false) {
-						VN1++;
-					}
-					if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == true) {
-						FN1++;
-					}
+	private void forLongMethod() {
+		for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
+			Row excelrow2 = sheet3.getRow(j);
+			Cell classname2 = excelrow2.getCell(2);
+			Cell methodname2 = excelrow2.getCell(3);
+			Cell isLongMethod2 = excelrow2.getCell(10);
+			if (classname.toString().equals(classname2.toString())
+					&& methodname.toString().equals(methodname2.toString())) {
+				if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == true) {
+					VP1++;
+				}
+				if (isLongMethod.getBooleanCellValue() == true && isLongMethod2.getBooleanCellValue() == false) {
+					FP1++;
+				}
+				if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == false) {
+					VN1++;
+				}
+				if (isLongMethod.getBooleanCellValue() == false && isLongMethod2.getBooleanCellValue() == true) {
+					FN1++;
 				}
 			}
-		}
+		}	
 	}
 
-
+	private void forGodClass() {
+		for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
+			Row excelrow2 = sheet3.getRow(j);
+			Cell classname2 = excelrow2.getCell(2);
+			Cell isGodClass2 = excelrow2.getCell(7);
+			if (classname.toString().equals(classname2.toString())) {
+				if (isGodClass.getBooleanCellValue() == true && isGodClass2.getBooleanCellValue() == true) {
+					VP2++;
+				}
+				if (isGodClass.getBooleanCellValue() == true && isGodClass2.getBooleanCellValue() == false) {
+					FP2++;
+				}
+				if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == false) {
+					VN2++;
+				}
+				if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == true) {
+					FN2++;
+				}
+					j = sheet3.getLastRowNum();
+			}
+		}
+	}		
+	
 	public void compararGodClass() throws IOException {
 		setWorkbookread3();
-		setWorkbookread(workbookread);
-		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-			Row excelrow = sheet.getRow(i);
-			Cell classname = excelrow.getCell(2);
-			Cell isGodClass = excelrow.getCell(10);
-			if (isGodClass != null) {
-				for (int j = 1; j <= sheet3.getLastRowNum(); j++) {
-					Row excelrow2 = sheet3.getRow(j);
-					Cell classname2 = excelrow2.getCell(2);
-					Cell isGodClass2 = excelrow2.getCell(7);
-					if (classname.toString().equals(classname2.toString())) {
-						if (isGodClass.getBooleanCellValue() == true && isGodClass2.getBooleanCellValue() == true) {
-							VP2++;
-						}
-						if (isGodClass.getBooleanCellValue() == true && isGodClass2.getBooleanCellValue() == false) {
-							FP2++;
-						}
-						if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == false) {
-							VN2++;
-						}
-						if (isGodClass.getBooleanCellValue() == false && isGodClass2.getBooleanCellValue() == true) {
-							FN2++;
-						}
-						j = sheet3.getLastRowNum();
-					}
-				}
-			}
+		setWorkbookread();
+		goThroughSheet();
 		}
-	}
 	
+	public void compararLongMethod() throws IOException {
+		setWorkbookread3();
+		setWorkbookread();
+		goThroughSheet();
+	}
 
-}
+
+}	
+

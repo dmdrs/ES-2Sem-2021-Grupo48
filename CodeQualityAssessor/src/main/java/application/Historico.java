@@ -16,9 +16,33 @@ public class Historico {
 	private static FileReader reader;
 	private static BufferedReader reader2;
 
+	public FileWriter getWriter() {
+		return writer;
+	}
+
+	public BufferedWriter getWriter2() {
+		return writer2;
+	}
+
+	public FileReader getReader() {
+		return reader;
+	}
+
+	public BufferedReader getReader2() {
+		return reader2;
+	}
+
+	public static void setWriter(FileWriter writer) throws IOException {
+		Historico.writer = new FileWriter("Histórico.txt", true); ;
+	}
+
+	public static void setReader(FileReader reader) throws FileNotFoundException {
+		Historico.reader = new FileReader ("Histórico.txt");
+	}
+	
 	public static void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) {
 		try {
-			writer = new FileWriter("Histórico.txt", true); 
+			setWriter(writer);
 			writer2 = new BufferedWriter(writer);
 			writer2.newLine();
 			writer2.write("Long Method:");
@@ -40,7 +64,7 @@ public class Historico {
 	
 	public static void mostrarhistorico (JTextArea TextArea) throws IOException {
 		try {
-			reader = new FileReader ("Histórico.txt");
+			setReader(reader);
 			reader2 = new BufferedReader (reader);
 			TextArea.read (reader2,null);
 			reader2.close();
@@ -50,22 +74,6 @@ public class Historico {
 			e.printStackTrace();
 		}
 		
-	}
-
-	public FileWriter getWriter() {
-		return writer;
-	}
-
-	public BufferedWriter getWriter2() {
-		return writer2;
-	}
-
-	public FileReader getReader() {
-		return reader;
-	}
-
-	public BufferedReader getReader2() {
-		return reader2;
 	}
 
 }

@@ -53,6 +53,12 @@ class CodeSmellsCompararTest {
 		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
 	}
 
+	@Test
+	@DisplayName("ESSENCIAL: Testar se ficheiro jasml existe.")
+	void setExcelFile() {
+		assertDoesNotThrow(() -> csc1.setExcelFile(excelFile),"O file jasml não existe(!)");
+	}
+	
 	@Nested
 	@DisplayName("Testar CompararLongMethod()")
 	class testCompararLongMethod{
@@ -60,88 +66,56 @@ class CodeSmellsCompararTest {
 		@Test
 		@DisplayName("Testar Valores VP1, FP1, VN1, FN1 no início do método setWorkbookread3().")
 		void testGetValues() {
-			assertEquals(0,csc1.getVP1(),"O valor é 0.");
-			assertEquals(0,csc1.getFP1(),"O valor é 0.");
-			assertEquals(0,csc1.getVN1(),"O valor é 0.");
-			assertEquals(0,csc1.getFN1(),"O valor é 0.");
+			assertEquals(0,csc1.getVP1(),"O valor esperado seria 0(!)");
+			assertEquals(0,csc1.getFP1(),"O valor esperado seria 0(!)");
+			assertEquals(0,csc1.getVN1(),"O valor esperado seria 0(!)");
+			assertEquals(0,csc1.getFN1(),"O valor esperado seria 0(!)");
 		}
 		
 		@Test
-		@DisplayName("Testar se file guia codesmells existe.")
+		@DisplayName("Testar se file guia codesmells existe no Eclipse.")
 		void testSetExcelFile3() throws FileNotFoundException,IOException {
 			
 			csc1.setExcelFile3();
 			excelFile3 = csc1.getExcelFile3();
 			assertNotNull(excelFile3, "Ficheiro Code_Smells.xls inexistente(!)");
 
-			System.out.println("ATENÇAOOOOOOOOOOOOOOOOO" + " - " + excelFile3);
-			
-
-			FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls"); //tenho de converter para string
-			InputStream test= new FileInputStream("Code_Smells2.xls");
+			InputStream test= new FileInputStream("Code_Smells.xls");//tenho de converter para string
 			String testmessage = org.apache.commons.io.IOUtils.toString(test);
 			String message = org.apache.commons.io.IOUtils.toString(excelFile3);
 
-			assertEquals(testmessage,message, "Não é o mesmo ficheiro(!)");
+			assertEquals(testmessage,message, "Não é o mesmo ficheiro(!)"); //testar se conteudo do ficheiro é o pretendido
 			
-			System.out.println("deu" + testmessage + "========="+message);
-			
-		// converter excelFile3 para string
-		//	assertEquals(testExcelFile3,excelFile3); comparar a ver se o ficheiro é o de nome "Code_Smells.xls"
-		//	assertThrows(FileNotFoundException.class, () -> csc1.setExcelFile3(excelFile3),"O método deve lançar FileNotFoundException");
 		}
 		
 		@Test
-		@DisplayName("Testar se projeto já existe na localizaçao -- tentar dps Gui.location()")
+		@DisplayName("Testar se projeto já existe na localizaçao dada.")
 		void testSetExcelFile() throws FileNotFoundException,IOException {
 			excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
-			csc1.setExcelFile(excelFile);
-			//csc1.compararLongMethod();
-			System.out.println("try");
 			assertNotNull(excelFile, "Projeto não existe na localização(!)"); 
 		}
 		
 		@Test
-		@DisplayName("Testar se Excel guia codesmells existe")
-		void testSetWorkbookread3() throws FileNotFoundException,IOException {
-			//FileInputStream testExcelFile3 = new FileInputStream("Code_Smells.xls");
-			System.out.println("testingggggggggg");
-			csc1.setExcelFile3();
-			excelFile3 = csc1.getExcelFile3();
-			assertNotNull(excelFile3, "Está a nulo(!)");
+		@DisplayName("Testar comportamento de goThroughSheet() se excel for em branco.")
+		void goThroughBlankSheet() throws IOException {
+			excelFile3= new FileInputStream("Code_Smells.xls");
+			System.out.println(excelFile3);
+			//csc1.setWorkbookread();
+			csc1.goThroughSheet();
+			System.out.println("oi1");
+			int test = csc1.getLastRowNum(); 
+			System.out.println(csc1.getLastRowNum());
+			assertEquals(0,csc1.getLastRowNum(), "O valor esperado seria 0(!)");
 			
-			csc1.setWorkbookread3();
-
-			System.out.println("ATENÇAOOOOOOOOOOOOOOOOO" + " - " + excelFile3);
-		//	assertEquals(testExcelFile3,excelFile3);
-		//	assertThrows(FileNotFoundException.class, () -> csc1.setExcelFile3(excelFile3),"O método deve lançar FileNotFoundException");
-			
-			//csc1.setExcelFile3(excelFile3);
-			//workbookread3 = new HSSFWorkbook(excelFile3);
-			//csc1.setWorkbookread3(workbookread3);	
+			//int a >0;
+			//assertEquals(a,)
 		}
 		
 		@Test
 		@DisplayName("Testar se projeto já existe na localizaçao -- tentar dps Gui.location()")
 		void testSetWorkbookread() throws FileNotFoundException,IOException {
-			//InputStream testExcelFile = new FileInputStream(Gui.getLocation());
-/*
-			try {
-				excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
-				csc1.setExcelFile(excelFile);
-				excelFile = csc1.getExcelFile();
-				assertNotNull(excelFile3, "Está a nulo(!)");
-				System.out.println("ATENÇAOOOOOOOOOOOOOOOOO______GUIIIIRDO"  + testExcelFile + " - " + excelFile);
-				assertEquals(testExcelFile,excelFile);
-			} catch (FileNotFoundException e) {
-				System.out.println("Ficheiro não existe no caminho indicado");
-				e.printStackTrace();
-			}	
-			*/
 			excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
 			csc1.setExcelFile(excelFile);
-			//csc1.compararLongMethod();
-			System.out.println("try");
 			assertNotNull(excelFile, "getLocation(!)"); 
 		}
 		
