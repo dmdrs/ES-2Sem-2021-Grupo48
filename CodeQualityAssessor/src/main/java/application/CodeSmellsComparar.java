@@ -66,7 +66,7 @@ public class CodeSmellsComparar implements Serializable {
 		return FN2;
 	}
 	
-	public void setExcelFile(InputStream excelFile) throws IOException {
+	public void setExcelFile() throws IOException {
 			this.excelFile = new FileInputStream(Gui.getLocation());
 		
 	}
@@ -103,7 +103,7 @@ public class CodeSmellsComparar implements Serializable {
 	}
 
 	public void setWorkbookread() throws IOException {
-		setExcelFile(excelFile);
+		setExcelFile();
 		workbookread = new HSSFWorkbook(excelFile);
 		sheet = workbookread.getSheetAt(0);
 	}

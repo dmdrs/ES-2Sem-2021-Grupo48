@@ -102,7 +102,7 @@ class CodeSmellsCompararTest {
 	@DisplayName("Testar se projeto já existe na localizaçao -- tentar dps Gui.location()")
 	void testSetWorkbookread() throws FileNotFoundException,IOException {
 		excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
-		csc1.setExcelFile(excelFile);
+		csc1.setExcelFile();
 		assertNotNull(excelFile, "getLocation(!)"); 
 	}
 	
