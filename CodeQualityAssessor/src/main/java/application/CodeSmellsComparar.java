@@ -92,6 +92,14 @@ public class CodeSmellsComparar implements Serializable {
 		this.lastRowNum = lastRowNum;
 	}
 	
+	public void resetvaraivel1(){}
+	public void resetvariavel1(){
+	VP1=0;
+	FP1=0;
+	VN1=0;
+	FN1=0;
+	}
+	
 	public void setWorkbookread3() throws IOException {
 		VP1 = 0;
 		FP1 = 0;

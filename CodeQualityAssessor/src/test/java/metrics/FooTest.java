@@ -28,6 +28,14 @@ import org.junit.jupiter.api.TestInfo;
 class FooTest {
 	
 	static String enterKey = System.getProperty("line.separator");
+    private File fi;
+    private MethodNames mn; 
+    private MethodNr nrr;
+    private Methodc cnrr;
+    private int in;
+    private int loc;
+    private int cyclocyclo;
+    private String pn;
 	private ArrayList<Foo> foos;
 	
 	/**
@@ -62,10 +70,53 @@ class FooTest {
 	void tearDown(TestInfo testInfo) throws Exception {
 		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
 	}
+	/**
+	 * Coloca a linha nº2 do excel jasml_metrics.xls como argumento
+	 * ID.	Package	class	method	NOM_class	LOC_class	WMC_class	LOC_method	CYCLO_method	is Long Method	is God Class
+	 * 1	com.jasml.classes	Attribute	Attribute(byte,int)	2	38	2	4	1	FALSO	FALSO
 
+	 */
+	void setExemplo() {
+	
+		String p="com.jasml.classes"; 
+		pn=p;
+		File f=new File("com.jasml.classes");
+		fi=f;
+		MethodNames s= null;//new MethodNames(foos);
+		mn=s;
+		int i=2;// valor da NOMclass
+		in=i;
+		int lc=38;//vlr LOC_class, MethodNr nr, Methodc cnr, int wmc)
+		loc=lc;
+		MethodNr nr=null; //WMC_class
+		nrr=nr;
+		Methodc cnr=null; //LOC_method
+		cnrr=cnr;
+		int wmc=1; // CYCLO_method
+		cyclocyclo=wmc;
+	}
+	/*	class MethodNames {	    
+		
+	    private ArrayList<String> names; 
+	    ArrayList<Foo> MethodNames = new ArrayList<Foo>();
+	    
+	    public MethodNames( ArrayList<String> s) {
+			this.names=s;
+		}
+
+		public ArrayList<String> getList() {
+			return names;	
+		}
+		
+		public void setList(ArrayList<String> list) {
+			this.names=list;
+		}
+	}*/
+		
+		
 	
 	@Test
-	@DisplayName("Testar construtor")
+	@DisplayName("Testar se construtor recebeu argumentos invalidos")
 	void testFoo(String p, File f, MethodNames s, int i, int lc, MethodNr nr, Methodc cnr, int wmc) {
 		//
 	}

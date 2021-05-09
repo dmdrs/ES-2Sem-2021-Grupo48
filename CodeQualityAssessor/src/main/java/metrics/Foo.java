@@ -13,7 +13,6 @@ public class Foo {
     private int in;
     private int loc;
     private int cyclocyclo;
-  
     private String pn;
     public static ArrayList<Foo> foos = new ArrayList<Foo>();
     

@@ -60,8 +60,7 @@ class MetricasTest {
 
 	
 	@Test
-	@DisplayName("Returns the number of columns in the model. "
-			+ "A JTable uses this method to determine how many columns it should create and display by default.")
+	@DisplayName("xxxx.")
 	void testX() {
 		
 
