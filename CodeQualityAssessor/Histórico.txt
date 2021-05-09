@@ -119,3 +119,8 @@ Long Method:
 LOC_method > 30 E CYCLO_method > 20
 God Class:
 WMC_class > 10 E NOM_class > 0
+
+Long Method:
+LOC_method > 30 E CYCLO_method > 20
+God Class:
+WMC_class > 10 E NOM_class > 0

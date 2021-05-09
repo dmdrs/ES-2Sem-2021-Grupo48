@@ -27,14 +27,9 @@ public class CodeSmellsComparar implements Serializable {
 	private InputStream excelFile3;
 	private org.apache.poi.ss.usermodel.Sheet sheet;
 	private org.apache.poi.ss.usermodel.Sheet sheet3;
-	//private Row excelrow;
 	private Cell classname;
 	private Cell methodname;
 	private Cell isLongMethod;
-	/*private Row excelrow2;
-	private Cell classname2;
-	private Cell methodname2;
-	private Cell isLongMethod2;*/
 	private Cell isGodClass;
 	private int lastRowNum;
 	
