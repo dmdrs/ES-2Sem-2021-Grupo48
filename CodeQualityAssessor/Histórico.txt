@@ -1,4 +1,5 @@
-Hi
+Histórico de Regras:
+
 Long Method:
 LOC_method > 30 E CYCLO_method > 20
 God Class:
