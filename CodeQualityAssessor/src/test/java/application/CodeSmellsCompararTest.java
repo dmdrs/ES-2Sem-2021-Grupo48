@@ -94,7 +94,7 @@ class CodeSmellsCompararTest {
 	@Test
 	@DisplayName("Testar se projeto já existe na localizaçao dada.")
 	void testSetExcelFile() throws FileNotFoundException,IOException {
-		excelFile= new FileInputStream("C:\\Users\\1\\Documents\\PPPPPP\\PPPPPP_metrics.xls");
+		excelFile= new FileInputStream("CodeSmells.xls");
 		assertNotNull(excelFile, "Projeto não existe na localização(!)"); 
 	}
 	
@@ -201,6 +201,45 @@ class CodeSmellsCompararTest {
 		}
 		
 	}
+	
+	@Test
+	void testResetVariavel1() throws IOException {
+		CodeSmellsComparar instance = new CodeSmellsComparar();
+	    instance.resetvariavel1();
+	    assertEquals(0, instance.getFN1());	
+	    assertEquals(0, instance.getFP1());
+	    assertEquals(0, instance.getVN1());
+	    assertEquals(0, instance.getVP1());
+		}
+	
+	@Test
+	void testResetVariavel2() throws IOException {
+		CodeSmellsComparar instance = new CodeSmellsComparar();
+	    instance.resetvariavel2();
+	    assertEquals(0, instance.getFN2());	
+	    assertEquals(0, instance.getFP2());
+	    assertEquals(0, instance.getVN2());
+	    assertEquals(0, instance.getVP2());
+		}
+	
+	@Test
+	void testSetExcelFileNew() throws IOException {
+		Gui instance = new Gui();
+	    instance.setLocation("CodeSmells.xls");
+	    CodeSmellsComparar instance2 = new CodeSmellsComparar();
+	    instance2.setExcelFile();
+	    assertEquals("CodeSmells.xls", instance2.getExcelFile());	
+
+	}
+	
+	@Test
+	public void testSetLastRowNum() {
+		CodeSmellsComparar instance = new CodeSmellsComparar();
+	    instance.setLastRowNum(5);;
+	    assertEquals(5, instance.getLastRowNum());
+	  }
+	
+
 	
 }
 

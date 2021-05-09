@@ -123,6 +123,7 @@ public class CodeSmellsComparar implements Serializable {
 		workbookread = new HSSFWorkbook(excelFile);
 		sheet = workbookread.getSheetAt(0);
 	}
+	
 
 	public void goThroughSheet() {
 		setLastRowNum(sheet.getLastRowNum());
