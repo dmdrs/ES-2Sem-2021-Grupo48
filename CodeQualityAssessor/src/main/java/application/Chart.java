@@ -53,12 +53,5 @@ public class Chart extends JDialog {
         return pieChart;
     }
 
-    public static void main(String[] args) {
 
-        EventQueue.invokeLater(() -> {
-
-            var ex = new Chart();
-            ex.setVisible(true);
-        });
-    }
 }
