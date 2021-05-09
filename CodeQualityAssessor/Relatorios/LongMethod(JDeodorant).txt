@@ -1,0 +1,28 @@
+application.Historico	public static void escreverhistorico(java.lang.String, int, java.lang.String, java.lang.String, int, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	writer2	B1	0/10
+application.Gui	public void listAllFiles(java.io.File) 	file	B2	0/6
+application.Chart	public void createChart(int, int, int, int, java.lang.String) 	chartPanel	B1	0/5
+application.Gui	private void initialize() 	readjavabutton	B1	0/5
+application.Gui	private void initialize() 	scrollPane	B1	0/4
+application.Gui	private void initialize() 	frame	B1	0/3
+application.Gui	private void initialize() 	textField1	B1	0/3
+application.Gui	private void initialize() 	textField2	B1	0/3
+application.Gui	private void initialize() 	textField3	B1	0/3
+application.Gui	private void initialize() 	textField4	B1	0/3
+metrics.Foo	public org.apache.poi.hssf.usermodel.HSSFRow escreverMetricas(org.apache.poi.hssf.usermodel.HSSFSheet, int, int) 	classname	B1	0/3
+application.Gui	private void initialize() 	table	B1	0/2
+application.CodeSmellsDetecao	public void detecaoGodClass(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	a	B3	6/61
+application.CodeSmellsDetecao	public void detecaoGodClass(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	a	B4	1/49
+application.CodeSmellsDetecao	public void detecaoLongMethod(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	a	B3	2/21
+application.Gui	public void importExcelToJtable() throws java.io.IOException	model	B3	5/12
+application.Gui	private void initialize() 	metrica1	B1	1/3
+application.Gui	private void initialize() 	metrica2	B1	1/3
+application.Gui	private void initialize() 	metrica3	B1	1/3
+application.Gui	private void initialize() 	metrica4	B1	1/3
+application.Gui	public void gerarexcel() throws java.io.IOException	fileOut	B1	1/3
+application.CodeSmellsDetecao	public void detecaoLongMethod(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	model	B3	21/25
+application.CodeSmellsDetecao	public void detecaoGodClass(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	model	B3	61/64
+application.CodeSmellsDetecao	public void detecaoGodClass(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int) throws java.io.IOException	model	B4	49/51
+application.Gui	public void importExcelToJtable() throws java.io.IOException	linhas	B2	3/4
+application.Gui	public void importExcelToJtable() throws java.io.IOException	linhas	B3	2/3
+application.Gui	public void importExcelToJtable() throws java.io.IOException	metodos	B2	3/4
+application.Gui	public void importExcelToJtable() throws java.io.IOException	metodos	B3	2/3

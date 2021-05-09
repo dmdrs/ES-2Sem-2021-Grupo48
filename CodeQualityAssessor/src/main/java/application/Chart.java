@@ -2,6 +2,7 @@ package application;
 
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -12,12 +13,24 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
+/**
+ * Classe com métodos para criar piechart numa JDialog
+ * @author rgmpo-iscte
+ *
+ */
 
 
 public class Chart extends JDialog {
 	DefaultPieDataset dataset = null;
 
-
+/**
+ * Mostra o piechart criado numa JDialog depois de correr o método createDataset e createChart com os parametros que recebe
+ * @param VP
+ * @param FP
+ * @param VN
+ * @param FN
+ * @param CodeSmell
+ */
     public void createChart(int VP, int FP, int VN, int FN, String CodeSmell) {
         dataset=createDataset(VP,FP,VN,FN);
         JFreeChart chart = createChart(dataset, CodeSmell);
@@ -31,7 +44,14 @@ public class Chart extends JDialog {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
+/**
+ * Cria o dataset para a PieChart com os indicadores recebidos
+ * @param VP
+ * @param FP
+ * @param VN
+ * @param FN
+ * @return dataset
+ */
     public DefaultPieDataset createDataset(int VP, int FP, int VN, int FN) {
 
         var dataset = new DefaultPieDataset();
@@ -42,7 +62,12 @@ public class Chart extends JDialog {
 
         return dataset;
     }
-
+/**
+ * Cria o piechart com o dataset criado e o nome para o piechart
+ * @param dataset
+ * @param CodeSmells
+ * @return piechart
+ */
     public JFreeChart createChart(DefaultPieDataset dataset, String CodeSmells) {
 
         JFreeChart pieChart = ChartFactory.createPieChart(
@@ -53,12 +78,4 @@ public class Chart extends JDialog {
         return pieChart;
     }
 
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(() -> {
-
-            var ex = new Chart();
-            ex.setVisible(true);
-        });
-    }
 }

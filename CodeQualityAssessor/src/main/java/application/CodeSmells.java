@@ -30,18 +30,6 @@ public class CodeSmells extends JDialog {
 	private CodeSmellsDetecao codeSmellsDetecao = new CodeSmellsDetecao();
 	private CodeSmellsComparar codeSmellsComparar = new CodeSmellsComparar();
 	private final JPanel contentPanel = new JPanel();
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			CodeSmells dialog = new CodeSmells();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
@@ -138,17 +126,6 @@ public class CodeSmells extends JDialog {
 	public void detecaoGodClass (String file, String metrica3 , int valor3,  String andor2, String metrica4, int valor4) throws IOException {
 		codeSmellsDetecao.detecaoGodClass(file, metrica3, valor3, andor2, metrica4, valor4);
 	}
-	
-	public void compararLongMethod() throws IOException {
-		codeSmellsComparar.compararLongMethod();
-          
-	}
-	
-	public void compararGodClass() throws IOException {
-		codeSmellsComparar.compararGodClass();
-        
-	}
-	
 	
 	
 }

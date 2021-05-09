@@ -15,35 +15,67 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
+/**
+ * Classe responsavel pela deteção dos Code Smells
+ * @author dmdrs
+ *
+ */
 public class CodeSmellsDetecao implements Serializable {
 	private HSSFWorkbook workbookread2;
 	private JTable tableLongMethod;
 	private  JTable tableGodClass;
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public HSSFWorkbook getWorkbookread2() {
 		return workbookread2;
 	}
-
+/**
+ * 
+ * @param workbookread2
+ */
 	public void setWorkbookread2(HSSFWorkbook workbookread2) {
 		this.workbookread2 = workbookread2;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public JTable getTableLongMethod() {
 		return tableLongMethod;
 	}
-
+/**
+ * 
+ * @param tableLongMethod
+ */
 	public void setTableLongMethod(JTable tableLongMethod) {
 		this.tableLongMethod = tableLongMethod;
 	}
-	
+/**
+ * 
+ * @return
+ */
 	public JTable getTableGodClass() {
 		return tableGodClass;
 	}
-
+/**
+ * 
+ * @param tableGodClass
+ */
 	public void setTableGodClass(JTable tableGodClass) {
 		this.tableGodClass = tableGodClass;
 	}
-
+/**
+ * Recebe como argumentos o caminho para o excel gerado e as regras definidas na Gui para a deteção do CodeSmell LongMethod. Mostra True ou False para este CodeSmell numa Jtbale com a identificação do método
+ * @param file
+ * @param metrica1
+ * @param valor1
+ * @param andor1
+ * @param metrica2
+ * @param valor2
+ * @throws IOException
+ */
 	public void detecaoLongMethod(String file, String metrica1, int valor1, String andor1, String metrica2, int valor2)
 			throws IOException {
 		try {
@@ -105,7 +137,16 @@ public class CodeSmellsDetecao implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Recebe como argumentos o caminho para o excel gerado e as regras definidas na Gui para a deteção do CodeSmell GodClass. Mostra True ou False para este CodeSmell numa Jtbale com a identificação da classe.
+	 * @param file
+	 * @param metrica3
+	 * @param valor3
+	 * @param andor2
+	 * @param metrica4
+	 * @param valor4
+	 * @throws IOException
+	 */
 	public void detecaoGodClass (String file, String metrica3 , int valor3,  String andor2, String metrica4, int valor4) throws IOException {
 		try {
 			InputStream excelFile = new FileInputStream(file);

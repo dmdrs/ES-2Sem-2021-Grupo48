@@ -1,5 +1,4 @@
-
-	package metrics;
+package metrics;
 
 	
 
@@ -36,125 +35,166 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.AND;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 	/**
+	 * Classe auxiliar para os nomes dos métodos
 	 * @author fmmba
 	 *
 	 */
-
-	
+	class MethodNames {	    
 		
-		
-	class MethodNames {
-	    
 	    private ArrayList<String> names; 
-	  
-	 
 	    ArrayList<Foo> MethodNames = new ArrayList<Foo>();
+	    /**
+	     * 
+	     * @param s
+	     */
 	    public MethodNames( ArrayList<String> s) {
 			this.names=s;
 		}
-	    
-	    
-
+	    /**
+	     * 
+	     * @return
+	     */
 		public ArrayList<String> getList() {
-			
-		return names;	
+			return names;	
 		}
+		/**
+		 * 
+		 * @param list
+		 */
 		public void setList(ArrayList<String> list) {
 			this.names=list;
 		}
-
-		}
+	}
 		
-		
+	/**
+	 * Classe auxiliar para o número de linhas dos métodos
+	 * @author fmmba
+	 *
+	 */
 	class MethodNr {
-		 private ArrayList<Integer> mcount;
-		 public MethodNr( ArrayList<Integer> i) {
-				this.mcount=i;
-			}
-		 public ArrayList<Integer> getList() {
-				
-				return mcount;	
-				}
+		
+		private ArrayList<Integer> mcount;
+		/**
+		 * 
+		 * @param i
+		 */
+		public MethodNr( ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+		/**
+		 * 
+		 * @return
+		 */
+		public ArrayList<Integer> getList() {
+			return mcount;	
+			
+		}
+		/**
+		 * 
+		 * @param i
+		 */
+		public void setList(ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+
 	}
+	/**
+	 * Classe Auxiliar para os ciclos de um método
+	 * @author fmmba
+	 *
+	 */
 	class Methodc {
-		 private ArrayList<Integer> mcount;
-		 public Methodc( ArrayList<Integer> i) {
+		
+		private ArrayList<Integer> mcount;
+		 /**
+		  * 
+		  * @param i
+		  */
+		public Methodc( ArrayList<Integer> i) {
 				this.mcount=i;
-			}
-		 public ArrayList<Integer> getListc() {
-				
-				return mcount;	
-				}
+		}
+		 /**
+		  * 
+		  * @return
+		  */
+		public ArrayList<Integer> getListc() {
+			return mcount;	
+		}
+		/**
+		 * 
+		 * @param i
+		 */
+		public void setList(ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+
 	}
-
-	
-
+/**
+ * Classe para as metricas
+ * @author fmmba
+ */
 	public class Metricas  {
+		
 	    public static int counter;
 	    public static int cyclocounter;
 	    public static int cyclocountercounter;
 	    public static int linesOfCode;
 	
-	   static ArrayList<String> namesofmethods;
-	  static ArrayList<Integer> nrlinemethods;
-	  static ArrayList<Integer> nrcyclomethods;
-	   static String nameofpackage;
-       
-		
-
-	  
+	    static ArrayList<String> namesofmethods;
+	    static ArrayList<Integer> nrlinemethods;
+	    static ArrayList<Integer> nrcyclomethods;
+	    static String nameofpackage;
+	  /**
+	   * Recebe o ficheiro .java e lê as suas métricas
+	   * @param file
+	   * @throws Exception
+	   */
 	    public static void main(File file) throws Exception {
-	        // creates an input stream for the file to be parsed
-	     counter = 0;
-	     cyclocounter= 0;
-	     cyclocountercounter=0;
+	    // creates an input stream for the file to be parsed
+	    counter = 0;
+	    cyclocounter= 0;
+	    cyclocountercounter=0;
 	   
-	     
-	     FileInputStream in = new FileInputStream( file);
-	     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			linesOfCode = (int) br.lines().count();
-		}
-	     try {
-		
-	      namesofmethods = new ArrayList<String>();
-	      nrlinemethods = new ArrayList<Integer>();
-	      nrcyclomethods = new ArrayList<Integer>();
-	     
-	      CompilationUnit cu = StaticJavaParser.parse(in);
-	      nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
-	      
-	      new ConsVisitor().visit(cu,  null);
-	      new MethodVisitor().visit(cu, null);
-	    //  new CYCLO_method1().visit(cu,null);
-	      
-	      MethodNames namez = new MethodNames(namesofmethods);
-	      MethodNr numz = new MethodNr(nrlinemethods);
-	      Methodc cyclonrr = new Methodc(nrcyclomethods);
-	    
-	      
-	    
-	      Foo fooo= new Foo(nameofpackage,file,namez,counter,linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
-	      Foo.foos.add(fooo);
-	      
-	      
-			
-	}finally {
+	    FileInputStream in = new FileInputStream( file);
+	    	try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	     		linesOfCode = (int) br.lines().count();
+	     	}
+	     	try {
+	     		namesofmethods = new ArrayList<String>();
+	     		nrlinemethods = new ArrayList<Integer>();
+	     		nrcyclomethods = new ArrayList<Integer>();
+	     		CompilationUnit cu = StaticJavaParser.parse(in);
+	     		nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
+	     		
+	     		new ConsVisitor().visit(cu,  null);
+	     		new MethodVisitor().visit(cu, null);
+	     		//new CYCLO_method1().visit(cu,null);
+	     		
+	     		MethodNames namez = new MethodNames(namesofmethods);
+	     		MethodNr numz = new MethodNr(nrlinemethods);
+	     		Methodc cyclonrr = new Methodc(nrcyclomethods);
+	     		
+	     		Foo fooo= new Foo(nameofpackage,file,namez,counter,linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
+	     		Foo.foos.add(fooo);
+	     	}finally {
     
-	}
-
-	
+	     	}
 	    }
-
+/**
+ * Classe para visitar métodos
+ * @author fmmba
+ *
+ */
 	    private static class MethodVisitor extends VoidVisitorAdapter<Object> {
-
+	    	/**
+	    	 * 
+	    	 */
 	        @Override
 	        public void visit(MethodDeclaration n, Object arg) {
 	            // here you can access the attributes of the method.
 	            // this method will be called for all methods in this 
 	            // CompilationUnit, including inner class methods
 	     
-	        	
-	        	
 	        	cyclocounter = 1;
 	    		Pattern pattern = Pattern.compile(
 	    				"(\\&\\&|\\|\\|)|((^| +|\\}|\\;|\t)((if|for|while|catch)( +|\\()))|(\\?.*\\:)|((\t|^|\\;|\\{\\})(case +|continue;))",
@@ -166,16 +206,8 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    		while (matcher.find()) {
 	    			cyclocounter++;
 	    		}
-	           
-    	        
-    	      
     	        
     	        nrcyclomethods.add(cyclocounter) ;
-	        	  
-	        
-	          
-	        	
-	        	
 	        	
     	        String s = n.getDeclarationAsString(false, false, false).substring(n.getDeclarationAsString(false, false, false).indexOf(n.getNameAsString()));
         		namesofmethods.add(s.replaceAll(" ",""));           
@@ -185,10 +217,15 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	            counter++;
 	        }
 	       
-	        }
-	        
+	    }
+	     /**
+	      * Classe para visitar construtores
+	      * @author fmmba
+	      */
 	    private static class ConsVisitor extends VoidVisitorAdapter<Object>{
-	    	
+	    	/**
+	    	 * 
+	    	 */
 	    	@Override
 	    	public void visit(ConstructorDeclaration n, Object arg) {
 	    		cyclocounter = 1;
@@ -202,7 +239,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    			cyclocounter++;
 	    		}
 	           
-	    	     nrcyclomethods.add(cyclocounter) ;
+	    	    nrcyclomethods.add(cyclocounter) ;
 
 	    		
 	    		
@@ -216,24 +253,17 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    	
 	    	}
 	    }
-	    	
-public static int getCycloCyclo(ArrayList<Integer> a) {
-	
-	for( int b :  a) {
-		cyclocountercounter=cyclocountercounter + b ;
-		
-	}
-	return cyclocountercounter;
-	}
-	
-
-
-	
+	    	/**
+	    	 * 
+	    	 * @param a
+	    	 * @return
+	    	 */
+	    public static int getCycloCyclo(ArrayList<Integer> a) {
+	    	for( int b :  a) {
+	    		cyclocountercounter=cyclocountercounter + b ;
+	    	}
+	    	return cyclocountercounter;
+	    }
 
 	
 	}
-	
-	
-	
-
-	
