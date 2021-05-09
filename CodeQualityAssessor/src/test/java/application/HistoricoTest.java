@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -57,13 +58,47 @@ class HistoricoTest {
 	class testEscreverhistorico{
 		
 		private FileWriter writer;
+		private FileReader reader;
 
-		@Test
-		@DisplayName("Testar se cria file Historico.txt")
-		void testSetWriter() throws IOException {
-			Historico.setWriter(writer);
-			writer= h1.getWriter();
-			assertNotNull(writer,"Não se criou file Historico.txt(!)");
+		@Nested
+		@DisplayName("Testar file Historico.txt.")
+		class testFileExists{
+
+			@Test
+			@DisplayName("Testar se ficheiro ainda nao existia no projeto Eclipse.")
+			void testFileExistsEclipse() throws IOException {
+				JTextArea textAreahistorico = new JTextArea();
+				assertThrows(FileNotFoundException.class, () -> Historico.mostrarhistorico(textAreahistorico),"Ficheiro Historico.txt inexistente(!)");
+			}
+			
+			@Nested
+			@DisplayName("Testar criar Historico.txt, quando nao existe.")
+			class testFileNew{
+				
+				@Test
+				@DisplayName("Testar se cria file Historico.txt para writer.")
+				void testSetWriter() throws IOException {
+					Historico.setWriter(writer);
+					writer= h1.getWriter();
+					assertNotNull(writer,"Não criou file Historico.txt(!)");
+				}
+				
+				@Test
+				@DisplayName("Testar se cria file Historico.txt para reader.")
+				void testSetReader() throws IOException {
+					Historico.setReader(reader);
+					writer= h1.getWriter();
+					assertNotNull(writer,"Não criou file Historico.txt(!)");
+				}	
+				
+				@Test
+				@DisplayName("Testar se reader e writer partilham file.")
+				void testInputEqualsOutput() throws IOException {
+					Historico.setWriter(writer);
+					writer= h1.getWriter();
+					assertNotNull(writer,"Não criou file Historico.txt(!)");
+				}		
+			}
 		}
 		
 		@Test
@@ -83,7 +118,7 @@ class HistoricoTest {
 			Historico.escreverhistorico(metrica1, valor1, operador1, 
 					metrica2, valor2, metrica3, valor3, operador2, metrica4, valor4);
 			writer2=h1.getWriter2();
-			
+	/*		
 			//reader=input, writer=output
 			IOUtils.copy(writer2, reader2);
 			IOUtils.
@@ -94,6 +129,7 @@ class HistoricoTest {
 			
 			assertEquals("xxxx",writer2,"here");
 			assertEquals(0,valor2,"oi");
+			*/
 		}
 	}
 	

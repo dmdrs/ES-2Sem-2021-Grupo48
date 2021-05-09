@@ -32,6 +32,9 @@ public class Historico {
 		return reader2;
 	}
 
+	//se file nao existir, ele cria em cada um dos voids + têm de ser iguais para ler um do outro
+	//reader=input, writer=output
+	//input first
 	public static void setWriter(FileWriter writer) throws IOException {
 		Historico.writer = new FileWriter("Histórico.txt", true); ;
 	}
