@@ -9,16 +9,21 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+
+import application.CodeSmells;
 
 
 
 /**
- * @author 1
+ * @author 1santo
  *
  */
 class MetricasTest {
-
+	
+	static String enterKey = System.getProperty("line.separator");
 	static Metricas m1;
 
 	/**
@@ -26,6 +31,7 @@ class MetricasTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		System.out.println(">>>>>>>>> Before all class tests." + enterKey);
 	}
 
 	/**
@@ -33,25 +39,36 @@ class MetricasTest {
 	 */
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
+		System.out.println("After all class tests. <<<<<<<<<<");
 	}
-
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp(TestInfo testInfo) throws Exception {
+		System.out.println("Before each: <<"+ testInfo.getDisplayName() + ">> in " + this);
+		m1=new Metricas();	
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown(TestInfo testInfo) throws Exception {
+		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
 	}
 
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+	@DisplayName("Returns the number of columns in the model. "
+			+ "A JTable uses this method to determine how many columns it should create and display by default.")
+	void testX() {
+		
 
+	}
+	
+	void test() {
+		//para mais testes necessario fix GuiLocation().
+	}
+	
 }

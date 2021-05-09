@@ -17,31 +17,34 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 /**
- * @author 1
+ * @author 1santo
  *
  */
 
 
 class FooTest {
-
+	
+	static String enterKey = System.getProperty("line.separator");
+	private ArrayList<Foo> foos;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		System.out.println(">>>>>>>>> Before all class tests." + enterKey);
 	}
-
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
+		System.out.println("After all class tests. <<<<<<<<<<");
 	}
-
-
-	private ArrayList<Foo> foos;
 
 	/**
 	 * @throws java.lang.Exception
@@ -56,7 +59,8 @@ class FooTest {
 	 * @throws java.lang.Exception
 	 */
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown(TestInfo testInfo) throws Exception {
+		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
 	}
 
 	

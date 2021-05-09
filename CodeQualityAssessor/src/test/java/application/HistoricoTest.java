@@ -26,7 +26,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-
+/**
+ * @author 1santo
+ *
+ */
 class HistoricoTest {
 
 	static String enterKey = System.getProperty("line.separator");
@@ -46,22 +49,33 @@ class HistoricoTest {
 	private String metrica4;
 	private int valor4;
 	
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		System.out.println(">>>>>>>>> Before all class tests." + enterKey);
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
 		System.out.println("After all class tests. <<<<<<<<<<");
 	}
-
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@BeforeEach
 	void setUp(TestInfo testInfo) throws Exception {
 		System.out.println("Before each: <<"+ testInfo.getDisplayName() + ">> in " + this);
 		h1=new Historico();
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@AfterEach
 	void tearDown(TestInfo testInfo) throws Exception {
 		System.out.println("Fim do teste: <<" + testInfo.getDisplayName() + ">>" + enterKey);
