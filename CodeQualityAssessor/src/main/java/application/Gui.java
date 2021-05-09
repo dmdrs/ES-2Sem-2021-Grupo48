@@ -1,10 +1,5 @@
 package application;
 
-/**
- * @author rgmpo-iscte
- *
- */
-
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -48,6 +43,11 @@ import org.apache.poi.ss.usermodel.Row;
 import metrics.Foo;
 import metrics.Metricas;
 
+/**
+ * Classe responsável pela criação da Gui principal e alguns métodos auxiliares para carregar projeto, gerar Excel e visualizar o mesmo
+ * @author rgmpo-iscte
+ *
+ */
 public class Gui {
 
 	private JFrame frame;
@@ -80,14 +80,14 @@ public class Gui {
 	}
 
 	/**
-	 * Create the application.
+	 * Cria a Gui principal
 	 */
 	public Gui() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa todos componentes e parte gráfica da Gui
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -308,7 +308,10 @@ public class Gui {
 		
 		
 	}
-	
+	/**
+	 * Recebe a pasta do projeto carregada na GUI e caso haja subpastas percorre-as. Quando encontra um ficheiro .java dentro da pasta corre o método readContent.
+	 * @param folder
+	 */
 	public void listAllFiles(File folder){
 	    File[] fileNames = folder.listFiles();
 	    
@@ -328,7 +331,11 @@ public class Gui {
 	      }
 	    }
 	  }
-	
+	/**
+	 * Recebe como argumento um ficheiro .java e explora as suas métricas
+	 * @param file
+	 * @throws IOException
+	 */
 	public void readContent(File file) throws IOException{
 	    try {
 			Metricas.main(file);
@@ -337,7 +344,10 @@ public class Gui {
 			e.printStackTrace();
 		}    
 	}
-	
+	/**
+	 * Gera o excel com as métricas e guarda-o na pasta do projeto carregado.
+	 * @throws IOException
+	 */
 	public void gerarexcel() throws IOException {
 		String excelname = filepath + "/" + name + "_metrics.xls" ;
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -354,7 +364,7 @@ public class Gui {
         colunacima.createCell(6).setCellValue("WMC_class");
         colunacima.createCell(7).setCellValue("LOC_method");
         colunacima.createCell(8).setCellValue("CYCLO_method");
-           
+          
         int a = 0;
         for(Foo foo : Foo.foos) {
        
@@ -378,7 +388,10 @@ public class Gui {
        
 
 	}
-
+/**
+ * Importa o excel gerado para uma Jtable para a sua visualização
+ * @throws IOException
+ */
 	public void importExcelToJtable() throws IOException {
 		ArrayList<String> packages = new ArrayList<String>();
 		ArrayList<String> classes = new ArrayList<String>();
@@ -434,6 +447,11 @@ public class Gui {
 		textArea.append("Número de linhas total do código: "+countlines+"\n");
 		scrollPane_1.setViewportView(textArea);				
 	}
+	/**
+	 * Recebe um array e conta o número de ocurrencias diferentes das Strings contidas nele, guardando num count.
+	 * @param lista
+	 * @return count
+	 */
 	public static int getocurrencias(ArrayList <String> lista) {
 		Set<String> set = new HashSet<>(lista);
 		lista.clear();
@@ -441,7 +459,11 @@ public class Gui {
 		int count=lista.size();
 		return count;
 	}
-	
+	/**
+	 * Converte o conteudo da Arraylist de Strings em inteiros e soma os valores.
+	 * @param lista
+	 * @return soma
+	 */
 	public static int somalinhas(ArrayList <String> lista) {
 		int soma =0;
 		for (int i=0;i<lista.size();i++) {
@@ -457,12 +479,18 @@ public class Gui {
 	public void setStringList(ArrayList<String> s) {
 	    this.classes=s;
 	}
-	
+	/**
+	 * Retorna a localização do excel gerado
+	 * @return
+	 */
 	public static String getLocation() {
 		return excelLocation;
 	}
+	/**
+	 * Guarda a localização do excel gerado numa string
+	 * @param s
+	 */
 	public void setLocation(String s) {
-		//s=filepath + "/" + name + "_metrics.xls";
 		this.excelLocation = s;
 	}
 	
