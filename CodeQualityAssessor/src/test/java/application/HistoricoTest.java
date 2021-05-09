@@ -66,9 +66,9 @@ class HistoricoTest {
 
 			@Test
 			@DisplayName("Testar se ficheiro ainda nao existia no projeto Eclipse.")
-			void testFileExistsEclipse() throws IOException {
+			void testFileExistsEclipse() throws IOException, FileNotFoundException {
 				JTextArea textAreahistorico = new JTextArea();
-				assertThrows(FileNotFoundException.class, () -> Historico.mostrarhistorico(textAreahistorico),"Ficheiro Historico.txt inexistente(!)");
+				assertDoesNotThrow(() -> Historico.mostrarhistorico(textAreahistorico),"Ficheiro Historico.txt inexistente(!)");
 			}
 			
 			@Nested
@@ -115,9 +115,9 @@ class HistoricoTest {
 			String metrica4="NOM_class";
 			int valor4=0;
 			
-			Historico.escreverhistorico(metrica1, valor1, operador1, 
-					metrica2, valor2, metrica3, valor3, operador2, metrica4, valor4);
-			writer2=h1.getWriter2();
+	//		Historico.escreverhistorico(metrica1, valor1, operador1, 
+	//				metrica2, valor2, metrica3, valor3, operador2, metrica4, valor4);
+	//		writer2=h1.getWriter2();
 	/*		
 			//reader=input, writer=output
 			IOUtils.copy(writer2, reader2);
