@@ -67,11 +67,8 @@ public class CodeSmellsComparar implements Serializable {
 	}
 	
 	public void setExcelFile(InputStream excelFile) throws IOException {
-		
-		if(excelFile != null) this.excelFile = excelFile;
-		else {
 			this.excelFile = new FileInputStream(Gui.getLocation());
-		}
+		
 	}
 
 	public void setExcelFile3() throws IOException {
