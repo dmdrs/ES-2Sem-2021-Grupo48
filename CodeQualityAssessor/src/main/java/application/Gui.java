@@ -324,22 +324,19 @@ public class Gui {
 	  }
 	
 	public void readContent(File file) throws IOException{
-	  
-	    
 	    try {
 			Metricas.main(file);
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	    
-	    }
+		}    
+	}
+	
 	public void gerarexcel() throws IOException {
 		String excelname = filepath + "/" + name + "_metrics.xls" ;
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Code Smells");  
-        setLocation();
+        setLocation(excelname);
 
         HSSFRow colunacima = sheet.createRow((short)0);
         colunacima.createCell(0).setCellValue("ID.");
@@ -351,9 +348,7 @@ public class Gui {
         colunacima.createCell(6).setCellValue("WMC_class");
         colunacima.createCell(7).setCellValue("LOC_method");
         colunacima.createCell(8).setCellValue("CYCLO_method");
-       
-       
-       
+           
         int a = 0;
         for(Foo foo : Foo.foos) {
        
@@ -440,6 +435,7 @@ public class Gui {
 		int count=lista.size();
 		return count;
 	}
+	
 	public static int somalinhas(ArrayList <String> lista) {
 		int soma =0;
 		for (int i=0;i<lista.size();i++) {
@@ -447,16 +443,21 @@ public class Gui {
 		}
 		return soma;
 	}
-	
+
 	public ArrayList<String> getStringList() {
 	    return classes;
+	}
+	
+	public void setStringList(ArrayList<String> s) {
+	    this.classes=s;
 	}
 	
 	public static String getLocation() {
 		return excelLocation;
 	}
-	public void setLocation() {
-		excelLocation = filepath + "/" + name + "_metrics.xls";
+	public void setLocation(String s) {
+		//s=filepath + "/" + name + "_metrics.xls";
+		this.excelLocation = s;
 	}
 	
 }
