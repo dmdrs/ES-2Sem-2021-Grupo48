@@ -40,121 +40,103 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	 *
 	 */
 
-	
 		
+	class MethodNames {	    
 		
-	class MethodNames {
-	    
 	    private ArrayList<String> names; 
-	  
-	 
 	    ArrayList<Foo> MethodNames = new ArrayList<Foo>();
+	    
 	    public MethodNames( ArrayList<String> s) {
 			this.names=s;
 		}
-	    
-	    
 
 		public ArrayList<String> getList() {
-			
-		return names;	
+			return names;	
 		}
+		
 		public void setList(ArrayList<String> list) {
 			this.names=list;
 		}
-
-		}
+	}
 		
 		
 	class MethodNr {
-		 private ArrayList<Integer> mcount;
-		 public MethodNr( ArrayList<Integer> i) {
-				this.mcount=i;
-			}
-		 public ArrayList<Integer> getList() {
-				
-				return mcount;	
-				}
+		
+		private ArrayList<Integer> mcount;
+		 
+		public MethodNr( ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+		public ArrayList<Integer> getList() {
+			return mcount;	
+		}
+		
 	}
-	class Methodc {
-		 private ArrayList<Integer> mcount;
-		 public Methodc( ArrayList<Integer> i) {
-				this.mcount=i;
-			}
-		 public ArrayList<Integer> getListc() {
-				
-				return mcount;	
-				}
-	}
-
 	
+	class Methodc {
+		
+		private ArrayList<Integer> mcount;
+		 
+		public Methodc( ArrayList<Integer> i) {
+				this.mcount=i;
+		}
+		 
+		public ArrayList<Integer> getListc() {
+			return mcount;	
+		}
+	}
 
 	public class Metricas  {
+		
 	    public static int counter;
 	    public static int cyclocounter;
 	    public static int cyclocountercounter;
 	    public static int linesOfCode;
 	
-	   static ArrayList<String> namesofmethods;
-	  static ArrayList<Integer> nrlinemethods;
-	  static ArrayList<Integer> nrcyclomethods;
-	   static String nameofpackage;
-       
-		
-
+	    static ArrayList<String> namesofmethods;
+	    static ArrayList<Integer> nrlinemethods;
+	    static ArrayList<Integer> nrcyclomethods;
+	    static String nameofpackage;
 	  
 	    public static void main(File file) throws Exception {
-	        // creates an input stream for the file to be parsed
-	     counter = 0;
-	     cyclocounter= 0;
-	     cyclocountercounter=0;
+	    // creates an input stream for the file to be parsed
+	    counter = 0;
+	    cyclocounter= 0;
+	    cyclocountercounter=0;
 	   
-	     
-	     FileInputStream in = new FileInputStream( file);
-	     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			linesOfCode = (int) br.lines().count();
-		}
-	     try {
-		
-	      namesofmethods = new ArrayList<String>();
-	      nrlinemethods = new ArrayList<Integer>();
-	      nrcyclomethods = new ArrayList<Integer>();
-	     
-	      CompilationUnit cu = StaticJavaParser.parse(in);
-	      nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
-	      
-	      new ConsVisitor().visit(cu,  null);
-	      new MethodVisitor().visit(cu, null);
-	    //  new CYCLO_method1().visit(cu,null);
-	      
-	      MethodNames namez = new MethodNames(namesofmethods);
-	      MethodNr numz = new MethodNr(nrlinemethods);
-	      Methodc cyclonrr = new Methodc(nrcyclomethods);
-	    
-	      
-	    
-	      Foo fooo= new Foo(nameofpackage,file,namez,counter,linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
-	      Foo.foos.add(fooo);
-	      
-	      
-			
-	}finally {
+	    FileInputStream in = new FileInputStream( file);
+	    	try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	     		linesOfCode = (int) br.lines().count();
+	     	}
+	     	try {
+	     		namesofmethods = new ArrayList<String>();
+	     		nrlinemethods = new ArrayList<Integer>();
+	     		nrcyclomethods = new ArrayList<Integer>();
+	     		CompilationUnit cu = StaticJavaParser.parse(in);
+	     		nameofpackage = cu.getPackageDeclaration().get().getNameAsString();
+	     		
+	     		new ConsVisitor().visit(cu,  null);
+	     		new MethodVisitor().visit(cu, null);
+	     		//new CYCLO_method1().visit(cu,null);
+	     		
+	     		MethodNames namez = new MethodNames(namesofmethods);
+	     		MethodNr numz = new MethodNr(nrlinemethods);
+	     		Methodc cyclonrr = new Methodc(nrcyclomethods);
+	     		
+	     		Foo fooo= new Foo(nameofpackage,file,namez,counter,linesOfCode,numz, cyclonrr, getCycloCyclo(nrcyclomethods));
+	     		Foo.foos.add(fooo);
+	     	}finally {
     
-	}
-
-	
+	     	}
 	    }
 
 	    private static class MethodVisitor extends VoidVisitorAdapter<Object> {
-
 	        @Override
 	        public void visit(MethodDeclaration n, Object arg) {
 	            // here you can access the attributes of the method.
 	            // this method will be called for all methods in this 
 	            // CompilationUnit, including inner class methods
 	     
-	        	
-	        	
 	        	cyclocounter = 1;
 	    		Pattern pattern = Pattern.compile(
 	    				"(\\&\\&|\\|\\|)|((^| +|\\}|\\;|\t)((if|for|while|catch)( +|\\()))|(\\?.*\\:)|((\t|^|\\;|\\{\\})(case +|continue;))",
@@ -166,16 +148,8 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    		while (matcher.find()) {
 	    			cyclocounter++;
 	    		}
-	           
-    	        
-    	      
     	        
     	        nrcyclomethods.add(cyclocounter) ;
-	        	  
-	        
-	          
-	        	
-	        	
 	        	
     	        String s = n.getDeclarationAsString(false, false, false).substring(n.getDeclarationAsString(false, false, false).indexOf(n.getNameAsString()));
         		namesofmethods.add(s.replaceAll(" ",""));           
@@ -185,8 +159,8 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	            counter++;
 	        }
 	       
-	        }
-	        
+	    }
+	       
 	    private static class ConsVisitor extends VoidVisitorAdapter<Object>{
 	    	
 	    	@Override
@@ -202,7 +176,7 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    			cyclocounter++;
 	    		}
 	           
-	    	     nrcyclomethods.add(cyclocounter) ;
+	    	    nrcyclomethods.add(cyclocounter) ;
 
 	    		
 	    		
@@ -217,23 +191,12 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    	}
 	    }
 	    	
-public static int getCycloCyclo(ArrayList<Integer> a) {
-	
-	for( int b :  a) {
-		cyclocountercounter=cyclocountercounter + b ;
-		
-	}
-	return cyclocountercounter;
-	}
-	
-
-
-	
+	    public static int getCycloCyclo(ArrayList<Integer> a) {
+	    	for( int b :  a) {
+	    		cyclocountercounter=cyclocountercounter + b ;
+	    	}
+	    	return cyclocountercounter;
+	    }
 
 	
 	}
-	
-	
-	
-
-	
