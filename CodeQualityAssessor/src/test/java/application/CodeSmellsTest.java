@@ -40,17 +40,15 @@ class CodeSmellsTest {
 
 	
 	@Test
-	@DisplayName("Testar detecaoLongMethod()")
-	void detecaoLongMethod() {
-		assertNotNull(csc1.getVP1()); 
-		assertNotNull(csc1.getFP1()); 
-		assertNotNull(csc1.getVN1()); 
-		assertNotNull(csc1.getFN1()); 
-		assertNotNull(csc1.getVP2()); 
-		assertNotNull(csc1.getFP2()); 
-		assertNotNull(csc1.getVN2()); 
-		assertNotNull(csc1.getFN2()); 
+	@DisplayName("Returns the number of columns in the model. "
+			+ "A JTable uses this method to determine how many columns it should create and display by default.")
+	void testX() {
+		
 
+	}
+	
+	void test() {
+		//para mais testes necessario fix GuiLocation().
 	}
 	
 	/*

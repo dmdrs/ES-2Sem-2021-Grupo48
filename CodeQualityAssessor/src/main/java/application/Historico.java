@@ -36,11 +36,11 @@ public class Historico {
 	//reader=input, writer=output
 	//input first
 	public static void setWriter(FileWriter writer) throws IOException {
-		Historico.writer = new FileWriter("vvxHistórico.txt", true); ;
+		Historico.writer = new FileWriter("1Histórico.txt", true); ;
 	}
 
 	public static void setReader(FileReader reader) throws FileNotFoundException {
-		Historico.reader = new FileReader ("vvxHistórico.txt");
+		Historico.reader = new FileReader ("1Histórico.txt");
 	}
 	
 	public static void setReader2(BufferedReader reader2) throws FileNotFoundException {

@@ -32,7 +32,7 @@ class HistoricoTest {
 	static String enterKey = System.getProperty("line.separator");
 	static Historico h1;
 	private BufferedWriter writer2;
-	public BufferedReader reader2;
+	private BufferedReader reader2;
 	private FileWriter writer;
 	private FileReader reader;
 	private String metrica1;
@@ -81,210 +81,60 @@ class HistoricoTest {
 		 System.out.println("valor metrica1"+metrica1);
 	}
 	
+
 	@Nested
-	@DisplayName("Testar método escreverhistorico.")
-	class testEscreverhistorico{
-		
+	@DisplayName("Testar se file Historico.txt ainda não existia no projeto Eclipse.")
+	class testFileExistsEclipse{
 
-		@Nested
-		@DisplayName("Testar se file Historico.txt ainda não existia no projeto Eclipse.")
-		class testFileExistsEclipse{
-
-			@Test
-			@DisplayName("Testar no método mostrarhistorico().")
-			void testExistsMostrar() throws IOException, FileNotFoundException {
-				JTextArea textAreahistorico = new JTextArea();
-				assertDoesNotThrow(() -> Historico.mostrarhistorico(textAreahistorico),"Ficheiro Historico.txt inexistente(!)");
-			}
-
-			@Test
-			@DisplayName("Testar no método mostrarhistorico().")
-			void testExistsEscrever() throws IOException, FileNotFoundException {
-				setExemplo();
-				
-
-				Historico.setReader(reader);
-				reader= h1.getReader();
-
-				System.out.println("1");
-				
-				Historico.setReader2(reader2);
-				reader2=h1.getReader2();
-
-				
-				Historico.setWriter(writer);
-				writer= h1.getWriter();
-
-				System.out.println("2");
-				
-				Historico.setWriter2(writer2);
-				writer2=h1.getWriter2();
-				
-				assertDoesNotThrow(() -> Historico.escreverhistorico(metrica1, valor1, operador1, metrica2, valor2, 
-						metrica3, valor3, operador2, metrica4, valor4),"Ficheiro Historico.txt inexistente(!)");
-				
-				Historico.escreverhistorico(metrica1, valor1, operador1, metrica2, valor2, 
-						metrica3, valor3, operador2, metrica4, valor4);
-				System.out.println("testevalor CORRURURURUEUEU");
-			}
-			
-			@Nested
-			@DisplayName("Testar criar Historico.txt, quando nao existe.")
-			class testFileNew{
-				
-				@Test
-				@DisplayName("Testar se cria file Historico.txt para writer.")
-				void testSetWriter() throws IOException {
-					Historico.setWriter(writer);
-					writer= h1.getWriter();
-					assertNotNull(writer,"Não criou file Historico.txt(!)");
-				}
-				
-				@Test
-				@DisplayName("Testar se cria file Historico.txt para reader.")
-				void testSetReader() throws IOException {
-					Historico.setReader(reader);
-					reader= h1.getReader();
-					assertNotNull(reader,"Não criou file Historico.txt(!)");
-				}	
-				
-				@Test
-				@DisplayName("Testar se reader e writer partilham file.")
-				void testInputEqualsOutput() throws IOException {
-					Historico.setWriter(writer);
-					writer= h1.getWriter();
-					assertNotNull(writer,"Não criou file Historico.txt(!)");
-				}		
-			}
-		}
-		
-		void teste() throws IOException {
-			int i=0;    
-			  String testp = "";
-			  System.out.println("33");
-	          while((i=reader2.read())!=-1){  
-				  System.out.println("3.5");
-
-	        	  testp=testp+(char)i;
-	        	  System.out.println("44");
-	        	  System.out.println("PFFFFFFFFFF "+testp);
-	          System.out.print((char)i);  
-	          }  
-	          reader2.close();    
-	          reader.close(); 
-	          System.out.println("55");
-		}
-		
-		public String inToString(InputStream inputStream) {
-
-	        String result = "";
-	        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-	        String line;
-	        try {
-	            while ((line = in.readLine()) != null) {
-	                result += line;
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return result;
-	    }
-		
 		@Test
-		@DisplayName("Long Method: LOC_method > 30 E CYCLO_method > 20 & God Class: WMC_class > 10 E NOM_class > 0")
-		void testEscreverNovaRegra() throws IOException {
-			
-			//BufferedWriter test= new Buffere
-			
-			String metrica1= "LOC_method";
-			int valor1= 30;
-			String operador1= "E";
-			String metrica2= "CYCLO_method";
-			int valor2= 20;
-			String metrica3= "WMC_class";
-			int valor3=10;
-			String operador2="E";
-			String metrica4="NOM_class";
-			int valor4=0;
-			
-			System.out.println("11");
-			
-			
-			String testString= metrica1+enterKey+" > " + valor1 + " " + operador1 + " " + metrica2 + " > " + valor2+enterKey+
-					"God Class:"+enterKey+metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4;
-			
-			System.out.println("22");
+		@DisplayName("Testar no método mostrarhistorico().")
+		void testExistsMostrar() throws IOException, FileNotFoundException {
+			JTextArea textAreahistorico = new JTextArea();
+			assertDoesNotThrow(() -> Historico.mostrarhistorico(textAreahistorico),"Ficheiro Historico.txt inexistente(!)");
+		}
 
-			Historico.setReader(reader);
-			reader= h1.getReader();
+		@Test
+		@DisplayName("Testar no método escreverhistorico().")
+		void testExistsEscrever() throws IOException, FileNotFoundException {
+			setExemplo();
 
-			System.out.println("11.3");
+			assertDoesNotThrow(() -> Historico.escreverhistorico(metrica1, valor1, operador1, metrica2, valor2, 
+					metrica3, valor3, operador2, metrica4, valor4),"Ficheiro Historico.txt inexistente(!)");
+				
+			Historico.escreverhistorico(metrica1, valor1, operador1, metrica2, valor2, 
+					metrica3, valor3, operador2, metrica4, valor4);
+			System.out.println("testevalor CORRURURURUEUEU");
+		}
 			
-			Historico.setReader2(reader2);
-			reader2=h1.getReader2();
-
-			
+	}
+	
+	@Nested
+	@DisplayName("Testar se é criado Historico.txt para Buffereds.")
+	class testFileNew{
+				
+		@Test
+		@DisplayName("Testar se cria file Historico.txt para writer.")
+		void testSetWriter() throws IOException {
 			Historico.setWriter(writer);
 			writer= h1.getWriter();
-
-			System.out.println("11.3");
-			
-			Historico.setWriter2(writer2);
-			writer2=h1.getWriter2();
-			
-			
-			Historico.escreverhistorico (metrica1, valor1,  operador1, metrica2, 
-				valor2, metrica3, valor3, operador2, metrica4, valor4);
-			System.out.println("3.4");
-			
-			
-			int a=-1;
-			a=IOUtils.copy(reader2, writer2); //copies from reader to writer, o writer vai ter o que o reader tem
-			
-			System.out.println(a+" - 6666");
-
-			//assertEquals()
-			
-			assertNotNull(writer2);
-			//teste();
-			
-			System.out.println("55555");
-			//String lineFromFile = null;
-			/*  int i=0;    
-			  String testp = "";
-			  System.out.println("33");
-	          while((i=reader2.read())!=-1){  
-				  System.out.println("3.5");
-
-	        	  testp=testp+(char)i;
-	        	  System.out.println("44");
-	        	  System.out.println("PFFFFFFFFFF "+testp);
-	          System.out.print((char)i);  
-	          }  
-	          reader2.close();    
-	          reader.close(); 
-	          System.out.println("55"); */
-			//System.out.println("heyo3"+lineFromFile);
-			//assertEquals(testString,linefromFile);
-
-			
-			
-	//		Historico.escreverhistorico(metrica1, valor1, operador1, 
-	//				metrica2, valor2, metrica3, valor3, operador2, metrica4, valor4);
-	//		writer2=h1.getWriter2();
-	/*		
-			//reader=input, writer=output
-			IOUtils.copy(writer2, reader2);
-			IOUtils.
-			
-			String message = writer2.lines().collect(Collectors.joining());
-			//String message = org.apache.commons.io.IOUtils.toString(writer2);
-	
-			
-			assertEquals("xxxx",writer2,"here");
-			assertEquals(0,valor2,"oi");
-			*/
+			assertNotNull(writer,"Não criou file Historico.txt(!)");
 		}
+				
+		@Test
+		@DisplayName("Testar se cria file Historico.txt para reader.")
+		void testSetReader() throws IOException {
+			Historico.setReader(reader);
+			reader= h1.getReader();
+			assertNotNull(reader,"Não criou file Historico.txt(!)");
+		}	
+				
+		@Test
+		@DisplayName("Testar se reader e writer partilham o mesmo file.")
+		void testInputEqualsOutput() throws IOException {
+			Historico.setWriter(writer);
+			writer= h1.getWriter();
+			assertNotNull(writer,"Não criou file Historico.txt(!)");
+		}		
 	}
 	
 	@Nested
@@ -309,6 +159,15 @@ class HistoricoTest {
 			reader2=h1.getReader2();
 			
 		}
+	}
+	
+	@Test
+	@DisplayName("Parametros=")
+	void testParametros() {
+		setExemplo();
+		
+		writer2=h1.getWriter2();
+		
 	}
 	
 }
