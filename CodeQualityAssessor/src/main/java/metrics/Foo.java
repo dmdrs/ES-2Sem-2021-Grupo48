@@ -65,6 +65,7 @@ public class Foo {
     	return cnrr.getListc();
     }
     
+    //deve ser 248
 	public int getCount() {
 		return in;
 	}

@@ -36,16 +36,25 @@ public class Historico {
 	//reader=input, writer=output
 	//input first
 	public static void setWriter(FileWriter writer) throws IOException {
-		Historico.writer = new FileWriter("Histórico.txt", true); ;
+		Historico.writer = new FileWriter("vvxHistórico.txt", true); ;
 	}
 
 	public static void setReader(FileReader reader) throws FileNotFoundException {
-		Historico.reader = new FileReader ("Histórico.txt");
+		Historico.reader = new FileReader ("vvxHistórico.txt");
 	}
 	
-	public static void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) throws IOException {
+	public static void setReader2(BufferedReader reader2) throws FileNotFoundException {
+		Historico.reader2 = new BufferedReader(reader);
+	}
+	
+	public static void setWriter2(BufferedWriter writer2) throws IOException {
+		Historico.writer2 = new BufferedWriter(writer);
+	}
+	
+	public static void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, 
+			int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) throws IOException {
 		setWriter(writer);
-		writer2 = new BufferedWriter(writer);
+		setWriter2(writer2);
 		writer2.newLine();
 		writer2.write("Long Method:");
 		writer2.newLine();
@@ -56,6 +65,7 @@ public class Historico {
 		writer2.write(metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4);
 		writer2.newLine();
 
+		System.out.println("VERRR"+writer2);
         writer2.close();
 
        
@@ -64,7 +74,7 @@ public class Historico {
 	public static void mostrarhistorico (JTextArea TextArea) throws IOException, FileNotFoundException {
 		
 			setReader(reader);
-			reader2 = new BufferedReader (reader);
+			setReader2(reader2);
 			TextArea.read (reader2,null);
 			reader2.close();
 			TextArea.requestFocus();
