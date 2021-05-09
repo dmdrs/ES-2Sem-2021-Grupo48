@@ -87,8 +87,16 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 		 */
 		public ArrayList<Integer> getList() {
 			return mcount;	
+			
 		}
-		
+		/**
+		 * 
+		 * @param i
+		 */
+		public void setList(ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+
 	}
 	/**
 	 * Classe Auxiliar para os ciclos de um método
@@ -98,14 +106,28 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	class Methodc {
 		
 		private ArrayList<Integer> mcount;
-		 
+		 /**
+		  * 
+		  * @param i
+		  */
 		public Methodc( ArrayList<Integer> i) {
 				this.mcount=i;
 		}
-		 
+		 /**
+		  * 
+		  * @return
+		  */
 		public ArrayList<Integer> getListc() {
 			return mcount;	
 		}
+		/**
+		 * 
+		 * @param i
+		 */
+		public void setList(ArrayList<Integer> i) {
+			this.mcount=i;
+		}
+
 	}
 /**
  * Classe para as metricas
