@@ -12,6 +12,7 @@ import java.io.InputStream;
 
 import javax.swing.JTextArea;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -82,6 +83,12 @@ class HistoricoTest {
 			Historico.escreverhistorico(metrica1, valor1, operador1, 
 					metrica2, valor2, metrica3, valor3, operador2, metrica4, valor4);
 			writer2=h1.getWriter2();
+			
+			//reader=input, writer=output
+			IOUtils.copy(writer2, reader2);
+			IOUtils.
+			
+			String message = writer2.lines().collect(Collectors.joining());
 			//String message = org.apache.commons.io.IOUtils.toString(writer2);
 	
 			
