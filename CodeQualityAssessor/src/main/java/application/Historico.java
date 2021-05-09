@@ -9,6 +9,11 @@ import java.io.IOException;
 
 import javax.swing.JTextArea;
 
+/**
+ * Classe responsável pelo Histórico de Regras
+ * @author rgmpo-iscte
+ *
+ */
 public class Historico {
 	
 	private static FileWriter writer;
@@ -32,9 +37,6 @@ public class Historico {
 		return reader2;
 	}
 
-	//se file nao existir, ele cria em cada um dos voids + têm de ser iguais para ler um do outro
-	//reader=input, writer=output
-	//input first
 	public static void setWriter(FileWriter writer) throws IOException {
 		Historico.writer = new FileWriter("Histórico.txt", true); ;
 	}
@@ -50,7 +52,20 @@ public class Historico {
 	public static void setWriter2(BufferedWriter writer2) throws IOException {
 		Historico.writer2 = new BufferedWriter(writer);
 	}
-	
+	/**
+	 * Escreve no ficheiro .txt do Histórico os valores e regras definidas no Editor de Regras da Gui para a deteção de CodeSmells 
+	 * @param metrica1
+	 * @param valor1
+	 * @param operador1
+	 * @param metrica2
+	 * @param valor2
+	 * @param metrica3
+	 * @param valor3
+	 * @param operador2
+	 * @param metrica4
+	 * @param valor4
+	 * @throws IOException
+	 */
 	public static void escreverhistorico (String metrica1, int valor1,  String operador1, String metrica2, 
 			int valor2, String metrica3, int valor3, String operador2, String metrica4, int valor4) throws IOException {
 		setWriter(writer);
@@ -65,12 +80,16 @@ public class Historico {
 		writer2.write(metrica3+ " > " + valor3 + " " + operador2 + " " + metrica4 + " > " + valor4);
 		writer2.newLine();
 
-		System.out.println("VERRR"+writer2);
         writer2.close();
 
        
 	}
-	
+	/**
+	 * Mostra o histórico que está guardado num .txt na TextArea recebida 
+	 * @param TextArea
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 */
 	public static void mostrarhistorico (JTextArea TextArea) throws IOException, FileNotFoundException {
 		
 			setReader(reader);

@@ -1,5 +1,4 @@
-
-	package metrics;
+package metrics;
 
 	
 
@@ -36,43 +35,66 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.AND;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 	/**
+	 * Classe auxiliar para os nomes dos métodos
 	 * @author fmmba
 	 *
 	 */
-
-		
 	class MethodNames {	    
 		
 	    private ArrayList<String> names; 
 	    ArrayList<Foo> MethodNames = new ArrayList<Foo>();
-	    
+	    /**
+	     * 
+	     * @param s
+	     */
 	    public MethodNames( ArrayList<String> s) {
 			this.names=s;
 		}
-
+	    /**
+	     * 
+	     * @return
+	     */
 		public ArrayList<String> getList() {
 			return names;	
 		}
-		
+		/**
+		 * 
+		 * @param list
+		 */
 		public void setList(ArrayList<String> list) {
 			this.names=list;
 		}
 	}
 		
-		
+	/**
+	 * Classe auxiliar para o número de linhas dos métodos
+	 * @author fmmba
+	 *
+	 */
 	class MethodNr {
 		
 		private ArrayList<Integer> mcount;
-		 
+		/**
+		 * 
+		 * @param i
+		 */
 		public MethodNr( ArrayList<Integer> i) {
 			this.mcount=i;
 		}
+		/**
+		 * 
+		 * @return
+		 */
 		public ArrayList<Integer> getList() {
 			return mcount;	
 		}
 		
 	}
-	
+	/**
+	 * Classe Auxiliar para os ciclos de um método
+	 * @author fmmba
+	 *
+	 */
 	class Methodc {
 		
 		private ArrayList<Integer> mcount;
@@ -85,7 +107,10 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 			return mcount;	
 		}
 	}
-
+/**
+ * Classe para as metricas
+ * @author fmmba
+ */
 	public class Metricas  {
 		
 	    public static int counter;
@@ -97,7 +122,11 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    static ArrayList<Integer> nrlinemethods;
 	    static ArrayList<Integer> nrcyclomethods;
 	    static String nameofpackage;
-	  
+	  /**
+	   * Recebe o ficheiro .java e lê as suas métricas
+	   * @param file
+	   * @throws Exception
+	   */
 	    public static void main(File file) throws Exception {
 	    // creates an input stream for the file to be parsed
 	    counter = 0;
@@ -129,8 +158,15 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
     
 	     	}
 	    }
-
+/**
+ * Classe para visitar métodos
+ * @author fmmba
+ *
+ */
 	    private static class MethodVisitor extends VoidVisitorAdapter<Object> {
+	    	/**
+	    	 * 
+	    	 */
 	        @Override
 	        public void visit(MethodDeclaration n, Object arg) {
 	            // here you can access the attributes of the method.
@@ -160,9 +196,14 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	        }
 	       
 	    }
-	       
+	     /**
+	      * Classe para visitar construtores
+	      * @author fmmba
+	      */
 	    private static class ConsVisitor extends VoidVisitorAdapter<Object>{
-	    	
+	    	/**
+	    	 * 
+	    	 */
 	    	@Override
 	    	public void visit(ConstructorDeclaration n, Object arg) {
 	    		cyclocounter = 1;
@@ -190,7 +231,11 @@ import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 	    	
 	    	}
 	    }
-	    	
+	    	/**
+	    	 * 
+	    	 * @param a
+	    	 * @return
+	    	 */
 	    public static int getCycloCyclo(ArrayList<Integer> a) {
 	    	for( int b :  a) {
 	    		cyclocountercounter=cyclocountercounter + b ;
