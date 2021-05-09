@@ -127,16 +127,5 @@ public class CodeSmells extends JDialog {
 		codeSmellsDetecao.detecaoGodClass(file, metrica3, valor3, andor2, metrica4, valor4);
 	}
 	
-	public void compararLongMethod() throws IOException {
-		codeSmellsComparar.compararLongMethod();
-          
-	}
-	
-	public void compararGodClass() throws IOException {
-		codeSmellsComparar.compararGodClass();
-        
-	}
-	
-	
 	
 }
